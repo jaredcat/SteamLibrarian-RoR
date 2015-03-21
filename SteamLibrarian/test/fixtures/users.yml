@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  steamid: 1
+  profile_pic: MyString
+
+two:
+  id: 1
+  steamid: 1
+  profile_pic: MyString
