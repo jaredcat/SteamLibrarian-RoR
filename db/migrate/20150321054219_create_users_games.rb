@@ -7,5 +7,7 @@ class CreateUsersGames < ActiveRecord::Migration
       t.timestamps null: false
     end
     add_index :users_games, :game_id
+    add_index :users_games, :user_id
+    add_index :users_games, [:user_id, :game_id], unique: true
   end
 end

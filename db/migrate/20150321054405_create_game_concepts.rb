@@ -7,5 +7,7 @@ class CreateGameConcepts < ActiveRecord::Migration
       t.timestamps null: false
     end
     add_index :game_concepts, :game_id
+    add_index :game_concepts, :concept
+    add_index :game_concepts, [:game_id, :concept], unique: true
   end
 end
