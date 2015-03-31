@@ -7,8 +7,18 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+  <div id="global_header">
+    <div class="content">
+      <div class="logo"></div>
+    </div>
+  </div>
+  
+  <div id="body_content">
+    <%= render 'layouts/navbar.html.erb' %>
+    <%= yield %>
+  </div>
+  <div id="footer">
+    <div class="footer_content"></div>
+  </div>
 </body>
 </html>
