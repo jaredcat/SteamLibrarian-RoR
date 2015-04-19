@@ -17,6 +17,7 @@
 /tmp
 
 # Ignore Spring files.
+/spring/*
 /spring/*.pid
 
 .env
