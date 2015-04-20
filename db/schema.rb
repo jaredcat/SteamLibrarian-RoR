@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150418233837) do
+ActiveRecord::Schema.define(version: 20150420034038) do
 
   create_table "game_concepts", force: :cascade do |t|
     t.integer  "game_id"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20150418233837) do
   add_index "games", ["id"], name: "index_games_on_id", unique: true
 
   create_table "users", force: :cascade do |t|
-    t.integer  "steamid"
+    t.string   "steamid"
     t.integer  "steam_level"
     t.string   "profile_pic"
     t.datetime "created_at",  null: false
