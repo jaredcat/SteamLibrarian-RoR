@@ -9,7 +9,7 @@ class UsersGame < ActiveRecord::Base
             if(results = Game.exists?(appid: gamesObject['games'][index]['appid']))
                 #usersgame.game_id = restults.id
             else
-                Game.new(appid: gamesObject['games'][index]['appid'])
+                Game.new(appid: gamesObject['games'][index]['appid'], name: gamesObject['games'][index]['name'])
             end
             usersgame.time_played = gamesObject['games'][index]['playtime_forever']
         end

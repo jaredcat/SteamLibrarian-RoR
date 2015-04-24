@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
     user.steam_level = Steam::Player.steam_level(user.steamid)
     #user.profile_pic = 
     if user.save
-      UsersGame.add(user.id, Steam::Player.owned_games(user.steamid))
+      UsersGame.add(user.id, Steam::Player.owned_games(user.steamid, params:{include_appinfo:1}))
     end
   end
 end
