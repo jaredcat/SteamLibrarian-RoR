@@ -6,7 +6,24 @@ body{
     color: #9099a1;
 }
 
+.content, .container-fluid, #body_content{
+    min-width: 800px;
+    max-width: 1200px;
+    margin: auto;
+}
+
 #global_header{
     background: #171a21;
     height: 140px;
+    position: relative;
+    
+    .logo{
+        font-weight: bold;
+        font-size: 25px;
+        padding: 0 25px;
+        position: absolute;
+        top: 50%;
+        margin-top: -17px;
+        color: white;
+    }
 }
