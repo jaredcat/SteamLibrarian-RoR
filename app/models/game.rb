@@ -4,6 +4,10 @@ class Game < ActiveRecord::Base
   has_many :game_genres
   has_many :users_games
   
+  def getInfo(game_name)
+  
+  end
+  
   def self.newGame(gameObject, steamID)
     #create new Game entry
     game = Game.new
