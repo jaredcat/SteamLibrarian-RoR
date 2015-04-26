@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'help' => 'pages/help'
   get 'about' => 'pages/about'
   post 'submit' => 'home#submit'
+  get 'user/:steamid' => 'home#user'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

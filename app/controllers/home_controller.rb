@@ -3,13 +3,15 @@ class HomeController < ApplicationController
   end
   
   def submit
-    if(params[:steamid] != "")
-      @user = User.newUser(params[:steamid])
+    steamid = User.valid?(params[:steamid])
+    if(steamid)
+      redirect_to action: "user", steamid: steamid
     else
-      redirect_to root_url
+      render action: "index"
     end
   end
   
   def user
+    @user = User.checkUser(params[:steamid])
   end
 end
