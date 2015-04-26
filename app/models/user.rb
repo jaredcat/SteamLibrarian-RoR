@@ -19,15 +19,16 @@ class User < ActiveRecord::Base
     else
       User.newUser(steamid)
     end
+    return User.find_by(steamid: steamid)
   end
   
   
   def self.newUser(steamid)
     user = User.new
-    user.steam_level = Steam::Player.steam_level(user.steamid)
-    user.profile_pic = Steam::User.summary(user.steamid)['avatar']
+    user.steam_level = Steam::Player.steam_level(steamid)
+    user.profile_pic = Steam::User.summary(steamid)['avatar']
     if user.save
-      UsersGame.add(user.id, Steam::Player.owned_games(user.steamid, params:{include_appinfo: 1}))
+      UsersGame.add(user.id, Steam::Player.owned_games(steamid, params:{include_appinfo: 1}))
     end
   end
   
