@@ -4,12 +4,14 @@ class HomeController < ApplicationController
   
   def submit
     if(params[:steamid] != "")
-      @user = User.newUser(params[:steamid])
+      steamid = User.check_id(params[:steamid])
+      redirect_to action: "user", steamid: steamid
     else
-      redirect_to root_url
+      render action: "index"
     end
   end
   
   def user
+    @user = User.checkUser(params[:steamid])
   end
 end
