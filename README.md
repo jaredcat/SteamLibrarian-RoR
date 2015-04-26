@@ -8,5 +8,5 @@ SECRET_TOKEN=\<key\>
 For development:  
 Run: export $(cat .env)  
   
-For testing:
+For testing:  
 foreman run rails s  
