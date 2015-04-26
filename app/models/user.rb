@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
   has_many :users_games
-  before_save {self.steamid = User.check_id(steamid)}
   validates :steamid, presence: true, length: {minimum: 17}
   
   
@@ -27,6 +26,7 @@ class User < ActiveRecord::Base
   
   def self.newUser(steamid)
     user = User.new
+    user.steamid = steamid
     user.steam_level = Steam::Player.steam_level(steamid)
     user.profile_pic = Steam::User.summary(steamid)['avatar']
     if user.save

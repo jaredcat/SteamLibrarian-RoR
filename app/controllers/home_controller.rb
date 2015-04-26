@@ -14,4 +14,8 @@ class HomeController < ApplicationController
   def user
     @user = User.checkUser(params[:steamid])
   end
+  
+  def stats
+    @user = User.checkUser(params[:steamid])
+  end
 end
