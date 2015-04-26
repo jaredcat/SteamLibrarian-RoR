@@ -4,12 +4,14 @@ class User < ActiveRecord::Base
   validates :steamid, presence: true, length: {minimum: 17}
   
   
-  def self.check_id(steamid)
-    if(steamid.to_i.to_s == steamid.to_s && steamid.to_s.length == 17)
-      return steamid.to_s
-    else
-      return Steam::User.vanity_to_steamid(steamid)
+  def self.valid?(vanity)
+    steamid = false
+    begin
+      steamid = Steam::User.vanity_to_steamid(vanity)
+      rescue Steam::SteamError 
     end
+    
+    return steamid
   end
   
   
