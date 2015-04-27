@@ -4,10 +4,16 @@ class User < ActiveRecord::Base
   
   
   def self.valid?(vanity)
+    vanity = vanity.to_s
     steamid = false
     begin
       steamid = Steam::User.vanity_to_steamid(vanity)
       rescue Steam::SteamError 
+    end
+    if not steamid
+      if vanity.to_i.to_s == vanity && vanity.length > 16
+        return vanity
+      end
     end
     
     return steamid
@@ -30,7 +36,7 @@ class User < ActiveRecord::Base
     user.steam_level = Steam::Player.steam_level(steamid)
     user.profile_pic = Steam::User.summary(steamid)['avatar']
     if user.save
-      UsersGame.checkUsersGame(user.id, Steam::Player.owned_games(steamid, params:{include_appinfo: 1}))
+      UsersGame.checkUsersGames(user.id, Steam::Player.owned_games(steamid, params:{include_appinfo: 1}))
     end
   end
   

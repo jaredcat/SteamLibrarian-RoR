@@ -53,9 +53,10 @@ class Game < ActiveRecord::Base
       if (!Game.exists?(gb_id: game.id))
         Game.newGame(game, appID)
       end
-      gameID = Game.find_by(gb_id: game.gb_id).id
+      gameID = Game.find_by(gb_id: game.id).id
     end
     return gameID
   end
   
 end
+ 

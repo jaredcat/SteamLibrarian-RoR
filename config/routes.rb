@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post 'submit' => 'home#submit'
   get 'user/:steamid' => 'home#user'
   get 'user/:steamid/stats/' => 'home#stats'
+  get 'user', to: redirect('/')
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
