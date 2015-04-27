@@ -5,7 +5,7 @@ class UsersGame < ActiveRecord::Base
     def self.checkUsersGames(user_id, gamesObject)
         for index in 0..gamesObject['game_count']-1 do
             game_id = Game.checkGame(gamesObject['games'][index]['name'], gamesObject['games'][index]['appid'])
-            if not UsersGame.exists?(user_id: userid, game_id: game_id)
+            if not UsersGame.exists?(user_id: user_id, game_id: game_id)
                 UsersGame.add(user_id, game_id, gamesObject['games'][index]['playtime_forever'])
             end
         end
