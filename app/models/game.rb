@@ -27,12 +27,12 @@ class Game < ActiveRecord::Base
   
   def self.updateGame(gameObject)
     #update existing entry
-    game = Game.find_by(gb_id: gameObject.id)
-    game.name = gameObject.name
-    game.api_detail_url = gameObject.api_detail_url
-    game.deck = gameObject.deck
-    game.image = gameObject.image['icon_url']
-    game.date_last_updated = gameObject.date_last_updated
+    game = Game.find_by(gb_id: gameObject['id'])
+    game.name = gameObject['name']
+    game.api_detail_url = gameObject['api_detail_url']
+    game.deck = gameObject['deck']
+    game.image = gameObject['image']['icon_url']
+    game.date_last_updated = gameObject['date_last_updated']
     game.save
   end
   
@@ -45,9 +45,10 @@ class Game < ActiveRecord::Base
   
   def self.checkGame(name, appID)
     if (Game.exists?(appid: appID))
-      gameID = Game.find_by(appid: appID).id
-      game = GiantBomb::Game.find(name)[0]
-      Game.updateGame(game)
+      game = Game.find_by(appid: appID)
+      gameObject = HTTParty.get("http://www.giantbomb.com/api/game/" + game.gb_id.to_s + "/?api_key=" + ENV['GIANTBOMB_API_KEY'] + "&format=json")['results']
+      Game.updateGame(gameObject)
+      gameID = game.id
     else
       game = GiantBomb::Game.find(name)[0]
       if (!Game.exists?(gb_id: game.id))
