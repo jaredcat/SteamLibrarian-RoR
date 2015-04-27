@@ -50,8 +50,10 @@ class Game < ActiveRecord::Base
       Game.updateGame(game)
     else
       game = GiantBomb::Game.find(name)[0]
-      Game.newGame(game, appID)
-      gameID = Game.find_by(appid: appID).id
+      if (!Game.exists?(gb_id: game.id))
+        Game.newGame(game, appID)
+      end
+      gameID = Game.find_by(gb_id: game.gb_id).id
     end
     return gameID
   end
