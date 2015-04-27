@@ -3,7 +3,6 @@ class HomeController < ApplicationController
   end
   
   def submit
-    steamid = nil
     steamid = User.valid?(params[:steamid])
     if(steamid)
       redirect_to action: "user", steamid: steamid
@@ -14,6 +13,9 @@ class HomeController < ApplicationController
   
   def user
     @user = User.checkUser(params[:steamid])
+    if not @user
+      redirect_to action: "index"
+    end
   end
   
   def stats
