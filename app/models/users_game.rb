@@ -1,19 +1,21 @@
 class UsersGame < ActiveRecord::Base
     belongs_to :games
     belongs_to :user
-
-    def self.add(userid, gamesObject)
+    
+    def self.checkUsersGames(user_id, gamesObject)
         for index in 0..gamesObject['game_count']-1 do
-            usersgame = UsersGame.new
-            usersgame.user_id = userid
-            if(results = Game.exists?(appid: gamesObject['games'][index]['appid']))
-                usersgame.game_id = results.id
-            else
-               Game.getInfo(gamesObject['games'][index]['name'], gamesObject['games'][index]['appid'])
-               usersgame.game_id = Game.find_by(appid: gamesObject['games'][index]['appid'])
+            game_id = Game.checkGame(gamesObject['games'][index]['name'], gamesObject['games'][index]['appid'])
+            if not UsersGame.exists?(user_id: userid, game_id: game_id)
+                UsersGame.add(user_id, game_id, gamesObject['games'][index]['playtime_forever'])
             end
-            usersgame.time_played = gamesObject['games'][index]['playtime_forever']
-            usersgame.save
         end
+    end
+
+    def self.add(user_id, game_id, timeplayedforever)
+        usersgame = UsersGame.new
+        usersgame.user_id = user_id
+        usersgame.game_id = game_id
+        usersgame.time_played = timeplayedforever
+        usersgame.save
     end
 end
