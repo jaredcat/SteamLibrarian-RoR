@@ -7,7 +7,6 @@ class UsersGame < ActiveRecord::Base
         user = User.find(user_id)
         # if users game count is unchanged, then no reason to check games
         if(user.game_count == nil || user.game_count != games['game_count'])
-            # games are stored in an array
             games['games'].each do |game|
                 # checkGame finds the game or adds it to our table.
                 game_id = Game.checkGame(game['name'], game['appid'])

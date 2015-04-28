@@ -26,8 +26,11 @@ class User < ActiveRecord::Base
   
   # Checks if a user is new or already exists
   def self.checkUser(steamid)
-    user = User.where(steamid: steamid).first_or_create
-    user.steamid = steamid
+    user = User.find_by(steamid: steamid)
+    if (user == nil)
+      user = User.new
+      user.steamid = steamid
+    end
     user_summary = Steam::User.summary(user.steamid)
     # If nil it matched the valid format for a steamID it wasn't real
     if(user_summary == nil)
