@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150425064422) do
+ActiveRecord::Schema.define(version: 20150428010414) do
 
   create_table "game_concepts", force: :cascade do |t|
     t.integer  "game_id"
@@ -68,6 +68,9 @@ ActiveRecord::Schema.define(version: 20150425064422) do
     t.string   "profile_pic"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "game_count"
+    t.string   "personaname"
+    t.string   "profileurl"
   end
 
   add_index "users", ["id"], name: "index_users_on_id", unique: true
@@ -76,9 +79,10 @@ ActiveRecord::Schema.define(version: 20150425064422) do
   create_table "users_games", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "game_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "time_played"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "playtime_forever"
+    t.integer  "playtime_2weeks"
   end
 
   add_index "users_games", ["game_id"], name: "index_users_games_on_game_id"
