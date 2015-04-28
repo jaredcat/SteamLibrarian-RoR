@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
     user.personaname = user_summary['personaname']
     last_update = user.updated_at
     # Only update a user every 3 days
-    if last_update > Date.today+3 && user.save
+    if (last_update == nil || last_update > Date.today+3) && user.save
       owned_games = Steam::Player.owned_games(user.steamid, params:{include_appinfo: 1})
       # Associates the user with all the games they own
       UsersGame.checkUsersGames(user.id, owned_games)
