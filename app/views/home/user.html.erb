@@ -58,7 +58,7 @@
 		</div>
 		
 		<div class="col-xs-9">
-		  <% gamelist = Game.where(id: UsersGame.where(user_id: @user.id).pluck(:game_id)) %>
+		  <% gamelist = Game.order('name ASC').where(id: UsersGame.where(user_id: @user.id).pluck(:game_id)) %>
 			<h3 class="text-left">Games (<%= gamelist.length %>)</h3>
 			<div class="well">
 				<table id="gametable" class="table table-striped table-bordered" 

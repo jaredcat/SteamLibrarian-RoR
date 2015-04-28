@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150428010414) do
+ActiveRecord::Schema.define(version: 20150428184719) do
 
   create_table "game_concepts", force: :cascade do |t|
     t.integer  "game_id"
@@ -56,11 +56,14 @@ ActiveRecord::Schema.define(version: 20150428010414) do
     t.string   "image"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.string   "site_detail_url"
+    t.integer  "review_score"
   end
 
   add_index "games", ["appid"], name: "index_games_on_appid", unique: true
   add_index "games", ["gb_id"], name: "index_games_on_gb_id", unique: true
   add_index "games", ["id"], name: "index_games_on_id", unique: true
+  add_index "games", ["name"], name: "index_games_on_name"
 
   create_table "users", force: :cascade do |t|
     t.string   "steamid"
