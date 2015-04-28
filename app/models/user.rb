@@ -40,12 +40,17 @@ class User < ActiveRecord::Base
     user = User.new
     user.steamid = steamid
     user_summary = Steam::User.summary(steamid)
-    # If nil we assume that the steam id wasn't a real id, but valid format
+    # If nil it matched the valid format for a steamID it wasn't real
     if(user_summary == nil)
+      return false
+    #checks for private profiles
+    elsif (user_summary['communityvisibilitystate'] != 5)
       return false
     end
     user.profile_pic = user_summary['avatar']
     user.steam_level = Steam::Player.steam_level(steamid)
+    user.profileurl = user_summary['profileurl']
+    user.personaname = user_summary['personaname']
     if user.save
       # Associates the user with all the games they own
       UsersGame.checkUsersGames(user.id, 
@@ -65,9 +70,9 @@ class User < ActiveRecord::Base
       user.profile_pic = getPic
     end
     if user.save
+      owned_games = Steam::Player.owned_games(user.steamid, params:{include_appinfo: 1})
       # Checks for any new games the user got since they last been here
-      UsersGame.checkUsersGames(user.id, 
-        Steam::Player.owned_games(user.steamid, params:{include_appinfo: 1}))
+      UsersGame.checkUsersGames(user.id, owned_games)
     end
   end
 end
