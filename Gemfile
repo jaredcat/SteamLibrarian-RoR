@@ -16,7 +16,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'httparty', '0.13.3'
 gem 'giantbomb'
 gem 'steam-api'
-gem 'jquery-datatables-rails', '3.2.0'
+gem 'jquery-datatables-rails'
 gem 'foreman'
 
 # Use jquery as the JavaScript library

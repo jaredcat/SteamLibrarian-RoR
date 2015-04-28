@@ -15,8 +15,8 @@ class User < ActiveRecord::Base
     
     # If vanity wasn't resolved, maybe they gave us their SteamID
     if not steamid
-      # Check if vanity is only numbers by droping letters by converting to int.
-      if vanity.to_i.to_s == vanity && vanity.length > 16
+      # Converting to int to drop letters and check if vanity was only numbers
+      if vanity.length == 17 && vanity.to_i.to_s == vanity
         return vanity
       end
     end
@@ -24,55 +24,29 @@ class User < ActiveRecord::Base
     return steamid
   end
   
-  # Checks if a user is new or alreaxy exists
+  # Checks if a user is new or already exists
   def self.checkUser(steamid)
-    # If user exists
-    if(user = User.find_by(steamid: steamid))
-      User.updateUser(user)
-    else
-      return User.newUser(steamid)
-    end
-    return User.find_by(steamid: steamid)
-  end
-  
-  # Adds a new user to the database
-  def self.newUser(steamid)
-    user = User.new
+    user = User.where(steamid: steamid).first_or_create
     user.steamid = steamid
-    user_summary = Steam::User.summary(steamid)
+    user_summary = Steam::User.summary(user.steamid)
     # If nil it matched the valid format for a steamID it wasn't real
     if(user_summary == nil)
       return false
     #checks for private profiles
-    elsif (user_summary['communityvisibilitystate'] != 5)
+    elsif (user_summary['communityvisibilitystate'] < 3)
       return false
     end
     user.profile_pic = user_summary['avatar']
-    user.steam_level = Steam::Player.steam_level(steamid)
+    user.steam_level = Steam::Player.steam_level(user.steamid)
     user.profileurl = user_summary['profileurl']
     user.personaname = user_summary['personaname']
-    if user.save
-      # Associates the user with all the games they own
-      UsersGame.checkUsersGames(user.id, 
-        Steam::Player.owned_games(steamid, params:{include_appinfo: 1}))
-    end
-    return user
-  end
-  
-  # Updates an existing user
-  def self.updateUser(user)
-    getLevel = Steam::Player.steam_level(user.steamid)
-    if getLevel != user.steam_level
-      user.steam_level = getLevel
-    end
-    getPic = Steam::User.summary(user.steamid)['avatar']
-    if getPic != user.profile_pic
-      user.profile_pic = getPic
-    end
-    if user.save
+    last_update = user.updated_at
+    # Only update a user every 3 days
+    if last_update > Date.today+3 && user.save
       owned_games = Steam::Player.owned_games(user.steamid, params:{include_appinfo: 1})
-      # Checks for any new games the user got since they last been here
+      # Associates the user with all the games they own
       UsersGame.checkUsersGames(user.id, owned_games)
     end
+    return user
   end
 end

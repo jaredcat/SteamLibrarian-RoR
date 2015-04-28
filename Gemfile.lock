@@ -187,7 +187,7 @@ DEPENDENCIES
   giantbomb
   httparty (= 0.13.3)
   jbuilder (~> 2.0)
-  jquery-datatables-rails (= 3.2.0)
+  jquery-datatables-rails
   jquery-rails
   pg (= 0.17.1)
   rails (= 4.2.0)
