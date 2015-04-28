@@ -12,7 +12,7 @@ class UsersGame < ActiveRecord::Base
                 # checkGame finds the game or adds it to our table.
                 game_id = Game.checkGame(game['name'], game['appid'])
                 # if the game isnt associated with the user then add it.
-                if(game_id != 0)
+                if(game_id != nil)
                     UsersGame.add(user_id, game_id, game)
                 end
                 count += 1
@@ -22,7 +22,7 @@ class UsersGame < ActiveRecord::Base
         else
             games['games'].each do |game|
                 game_id = Game.checkGame(game['name'], game['appid'])
-                if(game_id != 0)
+                if(game_id != nil)
                     UsersGame.updatePlaytime(user_id, game_id, game)
                 end
             end

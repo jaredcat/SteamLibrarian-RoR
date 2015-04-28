@@ -20,11 +20,21 @@ class Game < ActiveRecord::Base
     game.api_detail_url = gameObject.api_detail_url
     ame.site_detail_url = gameObject.site_detail_url
     game.deck = gameObject.deck
-    if(gameObject.image != nil)
+    if gameObject.image != nil
       game.image = gameObject.image['icon_url']
     end
     game.date_last_updated = gameObject.date_last_updated
-    game.save
+    if game.save
+      if gameObject.concepts != nil
+        GameConcept.add(game.id, gameObject.concepts)
+      end
+      if gameObject.themes != nil
+        GameConcept.add(game.id, gameObject.themes)
+      end
+      if gameObject.generes != nil
+        GameConcept.add(game.id, gameObject.genres)
+      end
+    end
     return game.id
   end
   
@@ -65,9 +75,6 @@ class Game < ActiveRecord::Base
       if (game != nil && !Game.exists?(gb_id: game.id))
         # return the games db id after updating
         return Game.newGame(game, appID)
-      else
-        # Something went wrong
-        return 0
       end
     end
     # if the game wasnt updated or created still return the id
