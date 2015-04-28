@@ -4,9 +4,10 @@ class UsersGame < ActiveRecord::Base
     
     # checks if a all the user's games are associated with a user
     def self.checkUsersGames(user_id, games)
+        count = 0
         user = User.find(user_id)
         # if users game count is unchanged, then no reason to check games
-        if(user.game_count == nil || user.game_count != games['game_count'])
+        if(user.game_count != games['game_count'])
             games['games'].each do |game|
                 # checkGame finds the game or adds it to our table.
                 game_id = Game.checkGame(game['name'], game['appid'])
@@ -14,8 +15,9 @@ class UsersGame < ActiveRecord::Base
                 if(game_id != 0)
                     UsersGame.add(user_id, game_id, game)
                 end
+                count += 1
             end
-            user.game_count = games['game_count']
+            user.game_count = count
             user.save
         else
             games['games'].each do |game|
