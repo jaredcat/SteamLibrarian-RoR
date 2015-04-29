@@ -84,9 +84,9 @@ class Game < ActiveRecord::Base
         return game.id
       end
     else
-      gameObject = HTTParty.get("http://www.giantbomb.com/api/games/?api_key=" + ENV['GIANTBOMB_API_KEY'] + "&format=json&limit=1&field_list=id&filter=name:" + name)
-      if (gameObject != nil && !Game.exists?(gb_id: gameObject['results'][0]['id']))
-        game = HTTParty.get("http://www.giantbomb.com/api/game/3030-" + gameObject['results'][0]['id'].to_s + "/?api_key=" + ENV['GIANTBOMB_API_KEY'] + "&format=json")['results']
+      gameObject = GiantBomb::Game.find(name)[0]
+      if (gameObject != nil && !Game.exists?(gb_id: gameObject.id))
+        game = HTTParty.get("http://www.giantbomb.com/api/game/3030-" + gameObject.id.to_s + "/?api_key=" + ENV['GIANTBOMB_API_KEY'] + "&format=json")['results']
         # return the games db id after updating
         return Game.newGame(game, appID)
       end
