@@ -52,7 +52,7 @@
   								<td><img src="<%= game.image %>" /> </td>
   								<td><%= game.name %></td>
   								<td><%= UsersGame.find_by(user_id: @user.id, game_id: game.id).playtime_forever %></td>
-  								<td><button type="button" class="btn btn-primary btn-lg btn-block"><a href="steam://run/<%= game.appid %>" style="color:white">Run</a></button></td>
+  								<td><a href="steam://run/<%= game.appid %>" style="color:white"><button type="button" role="button" class="btn btn-primary btn-lg btn-block">Run</button></a></td>
   							</tr>
 						<% end %>
 					</tbody>
