@@ -15,24 +15,24 @@ class Game < ActiveRecord::Base
     #create new Game entry
     game = Game.new
     game.appid = steamID
-    game.gb_id = gameObject.id
-    game.name = gameObject.name
-    game.api_detail_url = gameObject.api_detail_url
-    game.site_detail_url = gameObject.site_detail_url
-    game.deck = gameObject.deck
-    if gameObject.image != nil
-      game.image = gameObject.image['icon_url']
+    game.gb_id = gameObject['id']
+    game.name = gameObject['name']
+    game.api_detail_url = gameObject['api_detail_url']
+    game.site_detail_url = gameObject['site_detail_url']
+    game.deck = gameObject['deck']
+    if gameObject['image'] != nil
+      game.image = gameObject['image']['icon_url']
     end
-    game.date_last_updated = gameObject.date_last_updated
+    game.date_last_updated = gameObject['date_last_updated']
     if game.save
-      if gameObject.concepts != nil
-        GameConcept.add(game.id, gameObject.concepts)
+      if gameObject['concepts'] != nil
+        GameConcept.add(game.id, gameObject['concepts'])
       end
-      if gameObject.themes != nil
-        GameConcept.add(game.id, gameObject.themes)
+      if gameObject['themes'] != nil
+        GameConcept.add(game.id, gameObject['themes'])
       end
-      if gameObject.genres != nil
-        GameConcept.add(game.id, gameObject.genres)
+      if gameObject['genres'] != nil
+        GameConcept.add(game.id, gameObject['genres'])
       end
     end
     return game.id
@@ -79,16 +79,20 @@ class Game < ActiveRecord::Base
         if(gameObject != nil)
           return Game.updateGame(game, gameObject)
         end
+      #if row exists but isnt updated, return the row id
+      else
+        return game.id
       end
     else
-      game = GiantBomb::Game.find(name)[0]
-      if (game != nil && !Game.exists?(gb_id: game.id))
+      gameObject = HTTParty.get("http://www.giantbomb.com/api/games/?api_key=" + ENV['GIANTBOMB_API_KEY'] + "&format=json&limit=1&field_list=id&filter=name:" + name)
+      if (gameObject != nil && !Game.exists?(gb_id: gameObject['results'][0]['id']))
+        game = HTTParty.get("http://www.giantbomb.com/api/game/3030-" + gameObject['results'][0]['id'].to_s + "/?api_key=" + ENV['GIANTBOMB_API_KEY'] + "&format=json")['results']
         # return the games db id after updating
         return Game.newGame(game, appID)
       end
     end
-    # if the game wasnt updated or created still return the id
-    return game.id
+    # if the row didnt exist and a new one wast created, game should equal nil
+    return game
   end
   
 end
