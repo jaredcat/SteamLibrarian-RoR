@@ -4,7 +4,7 @@
 jQuery ->
     $('#gametable').DataTable({
         "columnDefs": [
-            { "orderable": false, "targets": 0 }
+            { "orderable": false, "targets": [0,3] }
         ],
         "order": [ 1, 'asc' ]
     });

@@ -6,60 +6,34 @@
   </div>
   
   <div class="row">
-		<div class="col-xs-3" style="min-width: 150px">
-			<h3 class="text-left">Filters</h3>
-			<div class="well well-sm">
-				<div class="checkbox">
-					<h4 class="text-left">Genres</h4>
-                          <label><input type="checkbox" value="">Action</label>
-                        </div>
-                        <div class="checkbox">
-                          <label><input type="checkbox" value="">Card Game</label>
-                        </div>
-                        <div class="checkbox">
-                          <label><input type="checkbox" value="">Real-Time Strategy</label>
-                        </div>
-                        <hr />
-<h4 class="text-left">Themes</h4>
-
-                        <div class="checkbox">
-                          <label><input type="checkbox" >Prehistoric</label>
-                        </div>
-                        <div class="checkbox">
-                          <label><input type="checkbox" >Cyberpunk</label>
-                        </div>
-                        <div class="checkbox">
-                          <label><input type="checkbox" >Sci-fi</label>
-                        </div>
-<div class="checkbox">
-                          <label><input type="checkbox" >Dating</label>
-                        </div>
-                        <hr />
-<h4 class="text-left">Concepts</h4>
-                        <div class="checkbox">
-                          <label><input type="checkbox" >4X</label>
-                        </div>
-                        <div class="checkbox">
-                          <label><input type="checkbox" >Artillery</label>
-                        </div>
-                        <div class="checkbox">
-                          <label><input type="checkbox" >Barbarians</label>
-                        </div>
-<div class="checkbox">
-                          <label><input type="checkbox" >Cavalry</label>
-                        </div>
-<div class="checkbox">
-                          <label><input type="checkbox" >Government</label>
-                        </div>
-<div class="checkbox">
-                          <label><input type="checkbox" >Minimap</label>
-                        </div>
+    <div class="col-xs-3" style="min-width: 150px">
+      <h3 class="text-left">Filters</h3>
+      <div class="well well-sm">
+        <h4 class="text-left">Genres</h4>
+				<% @genres.each do |genre| %>
+  				<div class="checkbox">
+  				  <label><input type="checkbox" value="<%= genre %>"><%= genre %></label>
+  				</div>
+  			<% end %>
+				<hr />
+				<h4 class="text-left">Themes</h4>
+				<% @themes.each do |theme| %>
+  				<div class="checkbox">
+  				  <label><input type="checkbox" value="<%= theme %>"><%= theme %></label>
+  				</div>
+  			<% end %>
+  			<hr />
+				<h4 class="text-left">Concepts</h4>
+				<% @concepts.each do |concept| %>
+  				<div class="checkbox">
+  				  <label><input type="checkbox" value="<%= concept %>"><%= concept %></label>
+  				</div>
+  			<% end %>
 			</div>
 		</div>
 		
 		<div class="col-xs-9">
-		  <% gamelist = Game.order('name ASC').where(id: UsersGame.where(user_id: @user.id).pluck(:game_id)) %>
-			<h3 class="text-left">Games (<%= gamelist.length %>)</h3>
+			<h3 class="text-left">Games (<%= @gamelist.length %>)</h3>
 			<div class="well">
 				<table id="gametable" class="table table-striped table-bordered" 
 					cellspacing="0" width="100%">
@@ -73,7 +47,7 @@
 					</thead>
 	 
 					<tbody>
-						<% gamelist.each do |game| %>
+						<% @gamelist.each do |game| %>
   							<tr>
   								<td><img src="<%= game.image %>" /> </td>
   								<td><%= game.name %></td>

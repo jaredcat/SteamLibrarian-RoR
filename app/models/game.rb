@@ -29,10 +29,10 @@ class Game < ActiveRecord::Base
         GameConcept.add(game.id, gameObject['concepts'])
       end
       if gameObject['themes'] != nil
-        GameConcept.add(game.id, gameObject['themes'])
+        GameTheme.add(game.id, gameObject['themes'])
       end
       if gameObject['genres'] != nil
-        GameConcept.add(game.id, gameObject['genres'])
+        GameGenre.add(game.id, gameObject['genres'])
       end
     end
     return game.id
@@ -91,7 +91,7 @@ class Game < ActiveRecord::Base
         return Game.newGame(game, appID)
       end
     end
-    # if the row didnt exist and a new one wast created, game should equal nil
+    # if the row didnt exist and a new one wasnt created, game should equal nil
     return game
   end
   
