@@ -18,7 +18,7 @@ class Game < ActiveRecord::Base
     game.gb_id = gameObject.id
     game.name = gameObject.name
     game.api_detail_url = gameObject.api_detail_url
-    ame.site_detail_url = gameObject.site_detail_url
+    game.site_detail_url = gameObject.site_detail_url
     game.deck = gameObject.deck
     if gameObject.image != nil
       game.image = gameObject.image['icon_url']
@@ -31,7 +31,7 @@ class Game < ActiveRecord::Base
       if gameObject.themes != nil
         GameConcept.add(game.id, gameObject.themes)
       end
-      if gameObject.generes != nil
+      if gameObject.genres != nil
         GameConcept.add(game.id, gameObject.genres)
       end
     end
@@ -47,7 +47,17 @@ class Game < ActiveRecord::Base
     game.deck = gameObject['deck']
     game.image = gameObject['image']['icon_url']
     game.date_last_updated = gameObject['date_last_updated']
-    game.save
+    if game.save
+      if gameObject['concepts'] != nil
+        GameConcept.add(game.id, gameObject['concepts'])
+      end
+      if gameObject['themes'] != nil
+        GameConcept.add(game.id, gameObject['themes'])
+      end
+      if gameObject['genres'] != nil
+        GameConcept.add(game.id, gameObject['genres'])
+      end
+    end
     return game.id
   end
   
@@ -64,7 +74,7 @@ class Game < ActiveRecord::Base
       # Check if the game should be updated
       if game.updated_at > Date.today+30
         # Get info directly from the game
-        gameObject = HTTParty.get("http://www.giantbomb.com/api/game/" + game.gb_id.to_s + "/?api_key=" + ENV['GIANTBOMB_API_KEY'] + "&format=json")['results']
+        gameObject = HTTParty.get("http://www.giantbomb.com/api/game/3030-" + game.gb_id.to_s + "/?api_key=" + ENV['GIANTBOMB_API_KEY'] + "&format=json")['results']
         # Return the games db id after updating
         if(gameObject != nil)
           return Game.updateGame(game, gameObject)
