@@ -18,7 +18,7 @@
         <li class="<%= 'active' if params[:controller] == 'about' %>"><%= link_to "About", about_path %></li>
         </li>
       </ul>
-      <%= form_tag("/submit", method: "post", class: "navbar-form navbar-right" ) do %>
+      <%= form_tag(url_for(controller: "home", action: "submit"), method: "post", class: "navbar-form navbar-right" ) do %>
         <div class="form-group">
         <%= label_tag(:steamid, "steamcommunity.com/id/") %>
         <%= text_field_tag(:steamid, '', placeholder: "Steam Username", type: "text", class: "form-control") %>

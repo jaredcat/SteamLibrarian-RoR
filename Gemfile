@@ -18,6 +18,7 @@ gem 'giantbomb'
 gem 'steam-api'
 gem 'jquery-datatables-rails'
 gem 'foreman'
+gem 'resque'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
