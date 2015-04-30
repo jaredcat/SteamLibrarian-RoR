@@ -4,8 +4,8 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'home#index'
-  get 'help' => 'pages/help'
-  get 'about' => 'pages/about'
+  get 'help' => 'pages#help'
+  get 'about' => 'pages#about'
   post 'submit' => 'home#submit'
   get 'user/:steamid' => 'home#user'
   post 'user/:steamid' => 'home#user'

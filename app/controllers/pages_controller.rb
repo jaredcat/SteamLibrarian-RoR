@@ -1,10 +1,7 @@
 class PagesController < ApplicationController
-  def statistics
+  def about
   end
 
   def help
-  end
-
-  def about
   end
 end
