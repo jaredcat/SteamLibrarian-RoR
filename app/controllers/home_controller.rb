@@ -18,9 +18,9 @@ class HomeController < ApplicationController
     end
     
     @gamelist = Game.where(id: UsersGame.where(user_id: @user.id).pluck(:game_id)).order("LOWER(name) ASC")
-    @themes = GameTheme.select("DISTINCT theme").where(id: @gamelist).order("LOWER(theme) ASC")
-    @concepts = GameConcept.select("DISTINCT concept").where(id: @gamelist).order("LOWER(concept) ASC")
-    @genres = GameGenre.select("DISTINCT genre").where(id: @gamelist).order("LOWER(genre) ASC")
+    @themes = GameTheme.group("theme").where(id: @gamelist).order("LOWER(theme) ASC").count("theme")
+    @concepts = GameConcept.group("concept").where(id: @gamelist).order("LOWER(concept) ASC").count("concept")
+    @genres = GameGenre.group("genre").where(id: @gamelist).order("LOWER(genre) ASC").count("genre")
     
     filtered_games = []
     if params[:themes] != nil
