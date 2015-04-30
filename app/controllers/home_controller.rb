@@ -18,29 +18,23 @@ class HomeController < ApplicationController
     end
     
     @gamelist = Game.where(id: UsersGame.where(user_id: @user.id).pluck(:game_id)).order("LOWER(name) ASC")
-    @themes = GameTheme.group("theme").where(id: @gamelist).order("LOWER(theme) ASC").count("theme")
-    @concepts = GameConcept.group("concept").where(id: @gamelist).order("LOWER(concept) ASC").count("concept")
-    @genres = GameGenre.group("genre").where(id: @gamelist).order("LOWER(genre) ASC").count("genre")
     
-    filtered_games = []
     if params[:themes] != nil
       @checked_themes = params[:themes]
-      filtered_games += GameTheme.where(theme: params[:themes]).pluck(:game_id)
+      @gamelist &= Game.where(id: GameTheme.where(theme: params[:themes]))
     end
     if params[:concepts] != nil
       @checked_concepts = params[:concepts]
-      filtered_games += GameConcept.where(concept: params[:concepts]).pluck(:game_id)
+      @gamelist &= Game.where(id: GameTheme.where(theme: params[:themes]))
     end
     if params[:genres] != nil
       @checked_genres = params[:genres]
-      filtered_games += GameGenre.where(genre: params[:genres]).pluck(:game_id)
+       @gamelist &= Game.where(id: GameGenre.where(genre: params[:genres]))
     end
     
-    
-    if filtered_games != []
-      filtered_games = filtered_games.uniq
-      @gamelist = Game.where(id: filtered_games).order("LOWER(name) ASC")
-    end
+    @themes = GameTheme.group("theme").where(id: @gamelist).order("LOWER(theme) ASC").count("theme")
+    @concepts = GameConcept.group("concept").where(id: @gamelist).order("LOWER(concept) ASC").count("concept")
+    @genres = GameGenre.group("genre").where(id: @gamelist).order("LOWER(genre) ASC").count("genre")
   end
   
   def stats

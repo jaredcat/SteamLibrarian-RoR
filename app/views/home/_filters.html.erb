@@ -1,0 +1,40 @@
+<%= form_tag(url_for(controller: "home", action: "user"), method: "post") do %>
+	<%= hidden_field_tag(:steamid, @user.steamid) %>
+	<%= submit_tag("Reset", class: "btn btn-danger") %>
+<% end %>
+
+<%= form_tag(url_for(controller: "home", action: "user"), method: "post") do %>
+  <%= hidden_field_tag(:steamid, @user.steamid) %>
+	<% if @genres != nil %>
+    <h4 class="text-left">Genres</h4>
+	  <% @genres.each do |genre| %>
+			<div class="checkbox">
+				<% @checked_genres != nil && @checked_genres.include?(genre[0]) ? checked = true : checked = false	%>
+			  	<label><%= check_box_tag("genres[]", genre[0], checked) %><%= genre[0] %> <span class="filter_amount">(<%= genre[1] %>)</span></label>
+			</div>
+		<% end %>
+		<%= submit_tag("Filter", class: "btn btn-default") %>
+	<hr />
+  <% end %>
+  <% if @themes != nil %>
+  	<h4 class="text-left">Themes</h4>
+		<% @themes.each do |theme| %>
+			<div class="checkbox">
+				<% @checked_themes != nil && @checked_themes.include?(theme[0]) ? checked = true : checked = false	%>
+		  		<label><%= check_box_tag("themes[]", theme[0], checked) %><%= theme[0] %> <span class="filter_amount">(<%= theme[1] %>)</span></label>
+			</div>
+		<% end %>
+		<%= submit_tag("Filter", class: "btn btn-default") %>
+		<hr />
+	<% end %>
+	<% if @concepts != nil %>
+	  <h4 class="text-left">Concepts</h4>
+		<% @concepts.each do |concept| %>
+			<div class="checkbox">
+				<% @checked_concepts != nil && @checked_concepts.include?(concept[0]) ? checked = true : checked = false	%>
+			  	<label><%= check_box_tag("concepts[]", concept[0], checked) %><%= concept[0] %> <span class="filter_amount">(<%= concept[1] %>)</span></label>
+			</div>
+		<% end %>
+		<%= submit_tag("Filter", class: "btn btn-default") %>
+	<% end %>
+<% end %>
