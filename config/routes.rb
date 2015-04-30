@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'about' => 'pages/about'
   post 'submit' => 'home#submit'
   get 'user/:steamid' => 'home#user'
+  post 'user/:steamid' => 'home#user'
   get 'user/:steamid/stats/' => 'home#stats'
   get 'user', to: redirect('/')
 

@@ -18,24 +18,28 @@ class HomeController < ApplicationController
     end
     
     @gamelist = Game.where(id: UsersGame.where(user_id: @user.id).pluck(:game_id)).order("LOWER(name) ASC")
-    @themes = GameTheme.where(id: @gamelist).order("LOWER(theme) ASC").pluck(:theme).uniq
-    @concepts = GameConcept.where(id: @gamelist).order("LOWER(concept) ASC").pluck(:concept).uniq
-    @genres = GameGenre.where(id: @gamelist).order("LOWER(genre) ASC").pluck(:genre).uniq
+    @themes = GameTheme.select("DISTINCT theme").where(id: @gamelist).order("LOWER(theme) ASC")
+    @concepts = GameConcept.select("DISTINCT concept").where(id: @gamelist).order("LOWER(concept) ASC")
+    @genres = GameGenre.select("DISTINCT genre").where(id: @gamelist).order("LOWER(genre) ASC")
     
-    filtered_games = nil
+    filtered_games = []
     if params[:themes] != nil
-      filered_games += GameTheme.where(game_id: @gamelist, theme: params[:themes]).pluck(:game_id)
+      @checked_themes = params[:themes]
+      filtered_games += GameTheme.where(theme: params[:themes]).pluck(:game_id)
     end
     if params[:concepts] != nil
-      filered_games += GameConcept.where(game_id: @gamelist, concept: params[:concepts]).pluck(:game_id)
+      @checked_concepts = params[:concepts]
+      filtered_games += GameConcept.where(concept: params[:concepts]).pluck(:game_id)
     end
     if params[:genres] != nil
-      filered_games += GameGenre.where(game_id: @gamelist, genre: params[:genres]).pluck(:game_id)
+      @checked_genres = params[:genres]
+      filtered_games += GameGenre.where(genre: params[:genres]).pluck(:game_id)
     end
     
-    if filtered_games != nil
+    
+    if filtered_games != []
       filtered_games = filtered_games.uniq
-      @gamelist = filtered_games
+      @gamelist = Game.where(id: filtered_games).order("LOWER(name) ASC")
     end
   end
   

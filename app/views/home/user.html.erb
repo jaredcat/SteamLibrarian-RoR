@@ -9,26 +9,35 @@
     <div class="col-xs-3" style="min-width: 150px">
       <h3 class="text-left">Filters</h3>
       <div class="well well-sm">
-        <h4 class="text-left">Genres</h4>
-				<% @genres.each do |genre| %>
-  				<div class="checkbox">
-  				  <label><input type="checkbox" value="<%= genre %>"><%= genre %></label>
-  				</div>
-  			<% end %>
-				<hr />
-				<h4 class="text-left">Themes</h4>
-				<% @themes.each do |theme| %>
-  				<div class="checkbox">
-  				  <label><input type="checkbox" value="<%= theme %>"><%= theme %></label>
-  				</div>
-  			<% end %>
-  			<hr />
-				<h4 class="text-left">Concepts</h4>
-				<% @concepts.each do |concept| %>
-  				<div class="checkbox">
-  				  <label><input type="checkbox" value="<%= concept %>"><%= concept %></label>
-  				</div>
-  			<% end %>
+      	<%= form_tag(url_for(controller: "home", action: "user"), method: "post") do %>
+      	<%= hidden_field_tag(:steamid, @user.steamid) %>
+	        <h4 class="text-left">Genres</h4>
+					<% @genres.each do |genre| %>
+	  				<div class="checkbox">
+	  					<% @checked_genres != nil && @checked_genres.include?(genre.genre) ? checked = true : checked = false	%>
+	  				  <label><%= check_box_tag("genres[]", genre.genre, checked) %><%= genre.genre %></label>
+	  				</div>
+	  			<% end %>
+	  			<%= submit_tag("Filter", class: "btn btn-default") %>
+					<hr />
+					<h4 class="text-left">Themes</h4>
+					<% @themes.each do |theme| %>
+	  				<div class="checkbox">
+	  					<% @checked_themes != nil && @checked_themes.include?(theme.theme) ? checked = true : checked = false	%>
+	  				  <label><%= check_box_tag("themes[]", theme.theme, checked) %><%= theme.theme %></label>
+	  				</div>
+	  			<% end %>
+	  			<%= submit_tag("Filter", class: "btn btn-default") %>
+	  			<hr />
+					<h4 class="text-left">Concepts</h4>
+					<% @concepts.each do |concept| %>
+	  				<div class="checkbox">
+	  					<% @checked_concepts != nil && @checked_concepts.include?(concept.concept) ? checked = true : checked = false	%>
+	  				  <label><%= check_box_tag("concepts[]", concept.concept, checked) %><%= concept.concept %></label>
+	  				</div>
+	  			<% end %>
+	  			<%= submit_tag("Filter", class: "btn btn-default") %>
+	  		<% end %>
 			</div>
 		</div>
 		
