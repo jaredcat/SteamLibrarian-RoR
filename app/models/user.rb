@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
       return false
     #checks for private profiles
     elsif (user_summary['communityvisibilitystate'] < 3)
-      return false
+      return "private"
     end
     user.profile_pic = user_summary['avatar']
     user.steam_level = Steam::Player.steam_level(user.steamid)
