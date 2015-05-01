@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
   def index
+    @user = nil
+    @error = (params[:error])
   end
   
   def submit
@@ -7,14 +9,19 @@ class HomeController < ApplicationController
     if(steamid)
       redirect_to action: "user", steamid: steamid
     else
-      redirect_to action: "index"
+      error = ["Invalid user ID"]
+      redirect_to action: "index", error: error
     end
   end
   
   def user
     @user = User.checkUser(params[:steamid])
     if not @user
-      redirect_to action: "index"
+      error = ["Invalid user ID"]
+      redirect_to action: "index", error: error
+    elsif @user == "private"
+      error = ["Profile set to Private"]
+      redirect_to action: "index", error: error
     end
     
     @gamelist = Game.where(id: UsersGame.where(user_id: @user.id).pluck(:game_id)).order("LOWER(name) ASC")
