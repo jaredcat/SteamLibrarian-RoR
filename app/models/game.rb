@@ -94,6 +94,5 @@ class Game < ActiveRecord::Base
     # if the row didnt exist and a new one wasnt created, game should equal nil
     return game
   end
-  
 end
  

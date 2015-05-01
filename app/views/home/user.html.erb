@@ -12,15 +12,13 @@
       	<%= render 'filters.html.erb' %>
       </div>
 	</div>
-		
 		<div class="col-xs-9">
 			<h3 class="text-left">Games (<%= @gamelist.length %>)</h3>
 			<div class="well">
 				<% if @gamelist.length < 1 %>
 					<h2>No games returned. Select less filters</h2>
 				<% else %>
-					<table id="gametable" class="table table-striped table-bordered" 
-						cellspacing="0" width="100%">
+					<table id="gametable" class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
 							<tr>
 								<th>Image</th>
@@ -29,7 +27,6 @@
 								<th>Launch Game</th>
 							</tr>
 						</thead>
-		 
 						<tbody>
 							<% @gamelist.each do |game| %>
 	  							<tr>
@@ -44,11 +41,11 @@
 				<% end %>
 			</div>
 		</div>
-  </div>
+	</div>
   
   <div class="row" style="margin-top:10px;">
-		<div class="col-xs-3 pull-right">
-		  <button type="button" class="random-button btn btn-default pull-right">Random</button>
-		</div>
+	<div class="col-xs-3 pull-right">
+	  <button type="button" class="random-button btn btn-default pull-right">Random</button>
+	</div>
   </div>
 </div>

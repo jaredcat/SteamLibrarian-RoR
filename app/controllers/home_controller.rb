@@ -32,9 +32,9 @@ class HomeController < ApplicationController
        @gamelist &= Game.where(id: GameGenre.where(genre: params[:genres]))
     end
     
-    @themes = GameTheme.group("theme").where(id: @gamelist).order("LOWER(theme) ASC").count("theme")
-    @concepts = GameConcept.group("concept").where(id: @gamelist).order("LOWER(concept) ASC").count("concept")
-    @genres = GameGenre.group("genre").where(id: @gamelist).order("LOWER(genre) ASC").count("genre")
+    @themes = GameTheme.group("theme").where(game_id: @gamelist).order("LOWER(theme) ASC").count("theme")
+    @concepts = GameConcept.group("concept").where(game_id: @gamelist).order("LOWER(concept) ASC").count("concept")
+    @genres = GameGenre.group("genre").where(game_id: @gamelist).order("LOWER(genre) ASC").count("genre")
   end
   
   def stats

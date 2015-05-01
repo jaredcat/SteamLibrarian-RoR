@@ -9,7 +9,7 @@
     <h4 class="text-left">Genres</h4>
 	  <% @genres.each do |genre| %>
 			<div class="checkbox">
-				<% @checked_genres != nil && @checked_genres.include?(genre[0]) ? checked = true : checked = false	%>
+				<% @checked_genres != nil && @checked_genres.include?(genre) ? checked = true : checked = false	%>
 			  	<label><%= check_box_tag("genres[]", genre[0], checked) %><%= genre[0] %> <span class="filter_amount">(<%= genre[1] %>)</span></label>
 			</div>
 		<% end %>
