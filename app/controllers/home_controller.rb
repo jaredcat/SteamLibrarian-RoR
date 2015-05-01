@@ -18,7 +18,7 @@ class HomeController < ApplicationController
     if not @user
       error = ["Invalid user ID"]
       redirect_to action: "index", error: error
-    else if @user == "private"
+    elsif @user == "private"
       error = ["Profile set to Private"]
       redirect_to action: "index", error: error
     end
