@@ -1,3 +1,36 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.filter-header{
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: bold;
+}
+.filter-btn{
+  display: inline-block;
+  float: right;
+}
+
+.filter-amount{
+  font-size:11px;
+}
+
+.game-name{
+  font-weight: bold;
+}
+
+#gametable{
+  text-align: center;
+  th{
+    text-align: center;
+  }
+  td{
+    vertical-align: middle !important;
+  }
+}
+
+.btn-row{
+  display: inline-block;
+  width: 100%;
+}
