@@ -1,12 +1,13 @@
 <% if @user %>
-  <div id="error_explanation">
-    <div class="alert alert-danger">
-      The form contains <%= pluralize(@user.count, "error") %>.
-    </div>
-    <ul>
-    <% @user.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
+<div id="user-info">
+  <div id="profile-pic">
+    <img src="<%= @user.profile_pic %>" />
   </div>
+  <div id="steam-name">
+        <%= @user.personaname %>
+  </div>
+  <div id="steam-level">
+       <%= @user.steam_level %>
+  </div>
+</div>
 <% end %>
