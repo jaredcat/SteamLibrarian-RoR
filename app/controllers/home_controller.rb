@@ -1,6 +1,11 @@
 class HomeController < ApplicationController
   def index
+<<<<<<< HEAD
     @error = (params[:error])
+=======
+    @user = nil
+    @errors = []
+>>>>>>> 9c22e8c93220b492f4d9c8f800a3f64566dde6d8
   end
   
   def submit
