@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   validates :steamid, presence: true, length: {minimum: 17}
   
   
-  def self.valid?(vanity)
+  def self.checkVanity(vanity)
     vanity = vanity.to_s
     # Initally false
     steamid = false

@@ -3,7 +3,7 @@ class HomeController < ApplicationController
   end
   
   def submit
-    steamid = User.valid?(params[:steamid])
+    steamid = User.checkVanity(params[:steamid])
     if(steamid)
       redirect_to action: "user", steamid: steamid
     else
