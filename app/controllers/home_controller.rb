@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
   def index
+    @user = nil
+    @errors = []
   end
   
   def submit
