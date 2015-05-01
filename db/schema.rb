@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150428184719) do
+ActiveRecord::Schema.define(version: 20150501195658) do
 
   create_table "game_concepts", force: :cascade do |t|
     t.integer  "game_id"
@@ -54,10 +54,11 @@ ActiveRecord::Schema.define(version: 20150428184719) do
     t.datetime "date_last_updated"
     t.string   "deck"
     t.string   "image"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "site_detail_url"
-    t.integer  "review_score"
+    t.integer  "reviews_score"
+    t.integer  "user_reviews_score"
   end
 
   add_index "games", ["appid"], name: "index_games_on_appid", unique: true
