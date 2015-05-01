@@ -21,15 +21,15 @@ class HomeController < ApplicationController
     
     if params[:themes] != nil
       @checked_themes = params[:themes]
-      @gamelist &= Game.where(id: GameTheme.where(theme: params[:themes]))
+      @gamelist &= Game.where(id: GameTheme.where(theme: params[:themes]).pluck(:game_id))
     end
     if params[:concepts] != nil
       @checked_concepts = params[:concepts]
-      @gamelist &= Game.where(id: GameTheme.where(theme: params[:themes]))
+      @gamelist &= Game.where(id: GameConcept.where(concept: params[:concepts]).pluck(:game_id))
     end
     if params[:genres] != nil
       @checked_genres = params[:genres]
-       @gamelist &= Game.where(id: GameGenre.where(genre: params[:genres]))
+      @gamelist &= Game.where(id: GameGenre.where(genre: params[:genres]).pluck(:game_id))
     end
     
     @themes = GameTheme.group("theme").where(game_id: @gamelist).order("LOWER(theme) ASC").count("theme")
