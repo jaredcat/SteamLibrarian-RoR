@@ -9,8 +9,8 @@
   <%= submit_tag("Filter", class: "filter-btn btn btn-default") %>
 	  <% @misc.each do |misc| %>
 			<div class="checkbox">
-				<% @checked_misc != nil && @checked_misc.include?(misc) ? checked = true : checked = false	%>
-			  	<label><%= check_box_tag("misc[]", misc, checked) %><%= misc %></label>
+				<% @checked_misc != nil && @checked_misc.include?(misc[0]) ? checked = true : checked = false	%>
+			  	<label><%= check_box_tag("misc[]", misc[0], checked) %><%= misc[0] %> <span class="filter-amount">(<%= misc[1] %>)</span></label>
 			</div>
 		<% end %>
 	<hr />

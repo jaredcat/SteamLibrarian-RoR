@@ -31,10 +31,12 @@ class HomeController < ApplicationController
         @checked_misc = params[:misc]
         params[:misc].each do |misc|
           if misc == "Never Played"
-            @gamelist &= Game.where(id: UsersGame.where(user_id: @user.id).where("playtime_forever == ?", 0).pluck(:game_id))
+            @neverplayed = Game.where(id: UsersGame.where(game_id: @gamelist).where("playtime_forever == ?", 0).pluck(:game_id))
+            @gamelist &= @neverplayed
           end
           if misc == "Only Played"
-            @gamelist &= Game.where(id: UsersGame.where(user_id: @user.id).where("playtime_forever != ?", 0).pluck(:game_id))
+            @onlyplayed = Game.where(id: UsersGame.where(game_id: @gamelist).where("playtime_forever != ?", 0).pluck(:game_id))
+            @gamelist &= @onlyplayed
           end
         end
       end
@@ -51,7 +53,10 @@ class HomeController < ApplicationController
         @gamelist &= Game.where(id: GameConcept.where(concept: params[:concepts]).pluck(:game_id))
       end
       
-      @misc = ["Never Played", "Only Played"]
+      @neverplayed = Game.where(id: UsersGame.where(game_id: @gamelist).where("playtime_forever == ?", 0).pluck(:game_id)) if @neverplayed == nil
+      @onlyplayed = Game.where(id: UsersGame.where(game_id: @gamelist).where("playtime_forever != ?", 0).pluck(:game_id)) if @onlyplayed == nil
+      
+      @misc = [["Never Played", @neverplayed.length], ["Only Played", @onlyplayed.length]]
       @genres = GameGenre.where(game_id: @gamelist).order("LOWER(genre) ASC")#.count("genre")
       @themes = GameTheme.where(game_id: @gamelist).order("LOWER(theme) ASC")#.count("theme")
       @concepts = GameConcept.where(game_id: @gamelist).order("LOWER(concept) ASC")#.count("concept")
