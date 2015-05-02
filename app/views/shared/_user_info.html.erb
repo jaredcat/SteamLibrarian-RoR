@@ -1,10 +1,8 @@
 <% if @user %>
 <div id="user-info">
     <div id="steam-name">
-        Hello, <%= @user.personaname %>
-  </div>
-  <div id="steam-level">
-       <%= @user.steam_level %>
+        Viewing: <%= @user.personaname %><br>
+        Level: <%= @user.steam_level %>
   </div>
   <div id="profile-pic">
     <img src="<%= @user.profile_pic %>" />
