@@ -10,7 +10,7 @@
     <%= submit_tag("Filter", class: "filter-btn btn btn-default") %>
 	  <% @genres.each do |genre| %>
 			<div class="checkbox">
-				<% @checked_genres != nil && @checked_genres.include?(genre) ? checked = true : checked = false	%>
+				<% @checked_genres != nil && @checked_genres.include?(genre[0]) ? checked = true : checked = false	%>
 			  	<label><%= check_box_tag("genres[]", genre[0], checked) %><%= genre[0] %> <span class="filter-amount">(<%= genre[1] %>)</span></label>
 			</div>
 		<% end %>
