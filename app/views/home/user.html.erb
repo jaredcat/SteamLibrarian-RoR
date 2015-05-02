@@ -32,25 +32,31 @@
 	  								<td class="game-name"><%=link_to game.name, game.site_detail_url, target: "_blank" %></td>
 	  								<td class="playtime_forever"><%= UsersGame.find_by(user_id: @user.id, game_id: game.id).playtime_forever %></td>
 	  								<td>
-	  									<% @genres.each do |genre| 
-	  										if genre.game_id == game.id %>
-	  											<%= genre.genre %>, 
-	  										<% end %>
-	  									<% end %>
+	  									<% genre_list = "" 
+	  									@genres.each do |genre| 
+	  										if genre.game_id == game.id
+	  											genre_list += "#{genre.genre}, " 
+	  										end
+	  									end %>
+	  									<%= genre_list[0..-3] %>
 	  								</td>
 	  								<td>
-	  									<% @themes.each do |theme| 
-	  										if theme.game_id == game.id %>
-	  											<%= theme.theme %>, 
-	  										<% end %>
-	  									<% end %>
+	  									<% theme_list = ""
+	  									@themes.each do |theme|
+	  										if theme.game_id == game.id
+	  											theme_list += "#{theme.theme}, "
+	  										 end
+	  									end %>
+	  									<%= theme_list[0..-3] %>
 	  								</td>
 	  								<td>
-	  									<% @concepts.each do |concept| 
-	  										if concept.game_id == game.id %>
-	  											<%= concept.concept %>, 
-	  										<% end %>
-	  									<% end %>
+	  									<% concept_list = ""
+	  									@concepts.each do |concept| 
+	  										if concept.game_id == game.id
+	  											concept_list += "#{concept.concept}, " 
+	  										end
+	  									end %>
+	  									<%= concept_list[0..-3] %>
 	  								</td>
 	  								<td><a href="steam://run/<%= game.appid %>" style="color:white"><button type="button" role="button" class="btn btn-primary btn-lg btn-block">Run</button></a></td>
 	  							</tr>
