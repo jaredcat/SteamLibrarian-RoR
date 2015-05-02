@@ -32,7 +32,7 @@ class HomeController < ApplicationController
         @checked_misc = params[:misc]
         params[:misc].each do |misc|
           if misc == "Never Played"
-            @neverplayed = Game.where(id: UsersGame.where(game_id: @gamelist).where("playtime_forever == ?", 0).pluck(:game_id))
+            @neverplayed = Game.where(id: UsersGame.where(game_id: @gamelist).where("playtime_forever = ?", 0).pluck(:game_id))
             @gamelist &= @neverplayed
           end
           if misc == "Only Played"
