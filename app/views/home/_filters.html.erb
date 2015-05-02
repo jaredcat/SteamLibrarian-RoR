@@ -5,22 +5,30 @@
 
 <%= form_tag(url_for(controller: "home", action: "user"), method: "post") do %>
   <%= hidden_field_tag(:steamid, @user.steamid) %>
+  <h4 class="text-left filter-header">Misc</h4>
+  <%= submit_tag("Filter", class: "filter-btn btn btn-default") %>
+	  <% @misc.each do |misc| %>
+			<div class="checkbox">
+				<% @checked_misc != nil && @checked_misc.include?(misc) ? checked = true : checked = false	%>
+			  	<label><%= check_box_tag("misc[]", misc, checked) %><%= misc %></label>
+			</div>
+		<% end %>
+	<hr />
 	<% if @genres != nil %>
     <h4 class="text-left filter-header">Genres</h4>
     <%= submit_tag("Filter", class: "filter-btn btn btn-default") %>
-	  <% @genres.each do |genre| %>
+	  <% @genres.group("genre").count("genre").each do |genre| %>
 			<div class="checkbox">
 				<% @checked_genres != nil && @checked_genres.include?(genre[0]) ? checked = true : checked = false	%>
 			  	<label><%= check_box_tag("genres[]", genre[0], checked) %><%= genre[0] %> <span class="filter-amount">(<%= genre[1] %>)</span></label>
 			</div>
 		<% end %>
-		
-	<hr />
+		<hr />
   <% end %>
   <% if @themes != nil %>
   	<h4 class="text-left filter-header">Themes</h4>
   	<%= submit_tag("Filter", class: "filter-btn btn btn-default") %>
-		<% @themes.each do |theme| %>
+		<% @themes.group("theme").count("theme").each do |theme| %>
 			<div class="checkbox">
 				<% @checked_themes != nil && @checked_themes.include?(theme[0]) ? checked = true : checked = false	%>
 		  		<label><%= check_box_tag("themes[]", theme[0], checked) %><%= theme[0] %> <span class="filter-amount">(<%= theme[1] %>)</span></label>
@@ -31,7 +39,7 @@
 	<% if @concepts != nil %>
 	  <h4 class="text-left filter-header">Concepts</h4>
 	  <%= submit_tag("Filter", class: "filter-btn btn btn-default") %>
-		<% @concepts.each do |concept| %>
+		<% @concepts.group("concept").count("concept").each do |concept| %>
 			<div class="checkbox">
 				<% @checked_concepts != nil && @checked_concepts.include?(concept[0]) ? checked = true : checked = false	%>
 			  	<label><%= check_box_tag("concepts[]", concept[0], checked) %><%= concept[0] %> <span class="filter-amount">(<%= concept[1] %>)</span></label>

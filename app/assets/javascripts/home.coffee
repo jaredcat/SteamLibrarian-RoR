@@ -5,9 +5,9 @@ jQuery ->
     $('#gametable').DataTable({
         "searching": false,
         "lengthChange": false,
-        "length": 50,
+        "pageLength": 20,
         "columnDefs": [
-            { "orderable": false, "targets": [0,3] }
+            { "orderable": false, "targets": [0,6] }
         ],
         "order": [ 1, 'asc' ]
     });

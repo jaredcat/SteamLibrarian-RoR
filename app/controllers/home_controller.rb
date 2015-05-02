@@ -27,6 +27,17 @@ class HomeController < ApplicationController
       
       @gamelist = Game.where(id: UsersGame.where(user_id: @user.id).pluck(:game_id)).order("LOWER(name) ASC")
       
+      if params[:misc] != nil
+        @checked_misc = params[:misc]
+        params[:misc].each do |misc|
+          if misc == "Never Played"
+            @gamelist &= Game.where(id: UsersGame.where(user_id: @user.id).where("playtime_forever == ?", 0).pluck(:game_id))
+          end
+          if misc == "Only Played"
+            @gamelist &= Game.where(id: UsersGame.where(user_id: @user.id).where("playtime_forever != ?", 0).pluck(:game_id))
+          end
+        end
+      end
       if params[:genres] != nil
         @checked_genres = params[:genres]
         @gamelist &= Game.where(id: GameGenre.where(genre: params[:genres]).pluck(:game_id))
@@ -40,10 +51,10 @@ class HomeController < ApplicationController
         @gamelist &= Game.where(id: GameConcept.where(concept: params[:concepts]).pluck(:game_id))
       end
       
-      
-      @genres = GameGenre.group("genre").where(game_id: @gamelist).order("LOWER(genre) ASC").count("genre")
-      @themes = GameTheme.group("theme").where(game_id: @gamelist).order("LOWER(theme) ASC").count("theme")
-      @concepts = GameConcept.group("concept").where(game_id: @gamelist).order("LOWER(concept) ASC").count("concept")
+      @misc = ["Never Played", "Only Played"]
+      @genres = GameGenre.where(game_id: @gamelist).order("LOWER(genre) ASC")#.count("genre")
+      @themes = GameTheme.where(game_id: @gamelist).order("LOWER(theme) ASC")#.count("theme")
+      @concepts = GameConcept.where(game_id: @gamelist).order("LOWER(concept) ASC")#.count("concept")
     end
   end
   
