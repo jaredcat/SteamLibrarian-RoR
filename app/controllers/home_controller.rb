@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   def index
     @user = nil
-    @error = (params[:error])
+    @errors = (params[:error])
   end
   
   def submit
@@ -20,7 +20,7 @@ class HomeController < ApplicationController
       error = ["Invalid user ID"]
       redirect_to action: "index", error: error
     elsif @user == "private"
-      @user = false
+      @user = nil
       error = ["Profile set to Private"]
       redirect_to action: "index", error: error
     else
