@@ -54,7 +54,7 @@ class HomeController < ApplicationController
         @gamelist &= Game.where(id: GameConcept.where(concept: params[:concepts]).pluck(:game_id))
       end
       
-      @neverplayed = Game.where(id: UsersGame.where(game_id: @gamelist).where("playtime_forever == ?", 0).pluck(:game_id)) if @neverplayed == nil
+      @neverplayed = Game.where(id: UsersGame.where(game_id: @gamelist).where("playtime_forever = ?", 0).pluck(:game_id)) if @neverplayed == nil
       @onlyplayed = Game.where(id: UsersGame.where(game_id: @gamelist).where("playtime_forever != ?", 0).pluck(:game_id)) if @onlyplayed == nil
       
       @misc = [["Never Played", @neverplayed.length], ["Only Played", @onlyplayed.length]]
