@@ -34,5 +34,14 @@ body{
 }
 
 #user-info{
-    
+    float: right;
+    margin-top: 15px;
+    #steam-name{
+        display: inline-block;
+        text-align: right;
+    }
+    #profile-pic{
+        display: inline-block;
+        vertical-align: top;
+    }
 }
