@@ -4,6 +4,7 @@
 jQuery ->
     $('#gametable').DataTable({
         "searching": false,
+        "autoWidth": true,
         "lengthChange": false,
         "pageLength": 20,
         "columnDefs": [

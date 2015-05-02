@@ -17,6 +17,13 @@ body{
     padding-top: 50px;
 }
 
+.logo{
+    a{
+        color: white;
+        text-decoration: none;
+    }
+}
+
 #global_header{
     background: #171a21; /* Old browsers */
     background: -moz-linear-gradient(top, #171a21 50%, #132738 92%, #428bca 100%); /* FF3.6+ */
