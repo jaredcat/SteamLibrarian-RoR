@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>SteamLibrarian</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
+<%= render 'shared/header' %>
 <body>
-  <%= render 'layouts/globalheader.html.erb' %>
-  <%= render 'layouts/navbar.html.erb' %>
+  <%= render 'shared/globalheader' %>
+  <%= render 'shared/navbar' %>
   <div id="body_content">
     <%= yield %>
-    <%= render 'layouts/footer.html.erb' %>
+    <%= render 'shared/footer' %>
   </div>
 </body>
 </html>

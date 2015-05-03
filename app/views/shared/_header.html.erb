@@ -1,0 +1,23 @@
+<head>
+  <% if content_for?(:title) %>
+    <title><%= yield(:title) %> | SteamLibrarian</title>
+    <meta property="og:title" content="<%= yield(:title) %> | SteamLibrarian" />
+  <% else %>
+    <title>SteamLibrarian</title>
+    <meta property="og:title" content="SteamLibrarian" />
+  <% end %>
+  
+  <% if content_for?(:type) %>
+    <meta property="og:type" content="<%= yield(:type) %>" />
+  <% else %>
+    <meta property="og:type" content="website" />
+  <% end %>
+  
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <meta name="application-name" content="SteamLibrarian" />
+  <!-- for Facebook -->
+  <meta property="og:image" content="<%= asset_path 'logo.png' %>" />
+  <meta property="og:url" content="<%= request.original_url %>" />
+  <%= csrf_meta_tags %>
+</head>
