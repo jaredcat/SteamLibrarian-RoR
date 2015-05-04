@@ -11,11 +11,14 @@ class Game < ActiveRecord::Base
   end
 
   
-  def self.checkGames(games)
+  def self.checkGames(games, force_update)
     game_ids = []
     game_genres = []
-    game_concepts = []
-    game_themes = []
+    update_game_genres = []
+    game_concepts =[]
+    update_game_concepts = []
+    game_themes = [] 
+    update_game_themes = []
     games.each do |gameObject|
       gb_id = nil
       new = false
@@ -35,23 +38,29 @@ class Game < ActiveRecord::Base
       end
       
       if(gb_id)
-        if(new)
-          # Get info directly from the game
-          gbObject = HTTParty.get("http://www.giantbomb.com/api/game/3030-" + gb_id.to_s + "/?api_key=" + ENV['GIANTBOMB_API_KEY'] + "&format=json")['results']
-          if gbObject != nil
+        # Get info directly from the game
+        gbObject = HTTParty.get("http://www.giantbomb.com/api/game/3030-" + gb_id.to_s + "/?api_key=" + ENV['GIANTBOMB_API_KEY'] + "&format=json")['results']
+        if gbObject != nil
+          if(new)
             #create new Game entry
             game = Game.new(gb_id: gbObject['id'])
             game.appid = gameObject['appid']
-            game.name = gbObject['name']
-            game.api_detail_url = gbObject['api_detail_url']
-            game.site_detail_url = gbObject['site_detail_url']
-            game.deck = gbObject['deck']
-            game.image = gbObject['image']['icon_url'] if gbObject['image'] != nil
-            game.date_last_updated = gbObject['date_last_updated']
-            if game.save
+          end
+          game.name = gbObject['name']
+          game.api_detail_url = gbObject['api_detail_url']
+          game.site_detail_url = gbObject['site_detail_url']
+          game.deck = gbObject['deck']
+          game.image = gbObject['image']['icon_url'] if gbObject['image'] != nil
+          game.date_last_updated = gbObject['date_last_updated']
+          if game.save
+            if(new)
               game_genres << [game.id, gbObject['genres']] if gbObject['genres'] != nil
               game_themes << [game.id, gbObject['themes']] if gbObject['themes'] != nil
               game_concepts << [game.id, gbObject['concepts']] if gbObject['concepts'] != nil
+            elsif(force_update)
+              update_game_genres << [game.id, gbObject['genres']] if gbObject['genres'] != nil
+              update_game_themes << [game.id, gbObject['themes']] if gbObject['themes'] != nil
+              update_game_concepts << [game.id, gbObject['concepts']] if gbObject['concepts'] != nil
             end
           end
         end
@@ -61,6 +70,11 @@ class Game < ActiveRecord::Base
     GameGenre.add(game_genres) if game_genres != []
     GameTheme.add(game_themes) if game_themes != []
     GameConcept.add(game_concepts) if game_concepts != []
+    if(force_update)
+      GameGenre.update(update_game_genres) if update_game_genres != []
+      GameTheme.update(update_game_themes) if update_game_themes != []
+      GameConcept.update(update_game_concepts) if update_game_concepts != []
+    end
     return game_ids
   end
 

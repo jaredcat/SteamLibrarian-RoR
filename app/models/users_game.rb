@@ -3,10 +3,10 @@ class UsersGame < ActiveRecord::Base
     belongs_to :user
     
     # checks if a all the user's games are associated with a user
-    def self.checkUsersGames(user, owned_games)
+    def self.checkUsersGames(user, owned_games, update)
         count = 0
         # checkGame finds the game or adds it to our table.
-        game_ids = Game.checkGames(owned_games['games'])
+        game_ids = Game.checkGames(owned_games['games'], update)
         # if the game isnt associated with the user then add it.
         if(game_ids.any?)
             count = UsersGame.add(user, game_ids)

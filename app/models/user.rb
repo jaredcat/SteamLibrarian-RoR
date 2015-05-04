@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
         associated_games = UsersGame.find_by(user_id: user.id)
         if update || associated_games == nil
           # Associates the user with all the games they own
-          UsersGame.checkUsersGames(user, owned_games)
+          UsersGame.checkUsersGames(user, owned_games, update)
         end
       end
     end
