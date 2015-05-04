@@ -1,3 +1,77 @@
 <% provide(:title, "Help") %>
-<h1>Pages#help</h1>
-<p>Find me in app/views/pages/help.html.erb</p>
+<h1>Help</h1>
+
+<div class="container-fluid" style="margin-top:20px;">
+<div class="col-xs-9">
+    <p>
+        1. How to find your steam community id. 
+    </p>    
+    
+    <p>
+        1.a. Visit http://steamcommunity.com/.
+    </p>
+    
+    <p>
+        1.b. Under “FIND PEOPLE” Type in your Steam username and click on the magnifying glass or hit enter.
+        <img class="img-responsive" src="<%= asset_path 'findID1.jpg' %>" width = 80%/>
+    </p>
+        
+    <p>
+        1.c. Find your Steam account from the list of returned results. If you have previously 
+        set a Custom Steam Community URL, your Steam Community Name will appear 
+        as the white part of your Custom URL. Proceed to Step 2.
+        <img class="img-responsive" src="<%= asset_path 'findID2.jpg' %>" width = 80%/>
+    </p>
+    
+    <p>
+        1.d. If you have not set a Custom URL, you’ll have to find your Steam ID by clicking 
+        your Steam account from the list. (In this example, it is Furbe).
+        <img class="img-responsive" src="<%= asset_path 'findID3.jpg' %>" width = 80%/>    
+    </p>
+    
+    <p>
+        1.e. Your Steam ID is at the end of your profile URL. (In this example, the user’s 
+        Steam ID would be 76561197960439684)
+        <img class="img-responsive" src="<%= asset_path 'findID4.jpg' %>" width = 80%/>
+    </p>
+        
+    <p>
+        2. Click Lookup
+        <img class="img-responsive" src="<%= asset_path 'findID4.jpg' %>" width = 80%/>    
+    </p>
+    
+    <p>
+        3. A list of all of your games will appear in the game table on the page.
+        <img class="img-responsive" src="<%= asset_path 'findID4.jpg' %>" width = 80%/>    
+    </p>
+    
+    <p>
+        4. Click the filters on the left to sort your games by Genre, Themes or Concepts 
+        <img class="img-responsive" src="<%= asset_path 'findID4.jpg' %>" width = 80%/> 
+        <ul>
+            <p>
+                a. Genre - A Genre is a general way of filtering games by what the gameplay is like.
+            </p>
+            
+            <p>
+                b. Theme - A Theme is what sort of setting the game takes place in. Examples include: 
+                Examples include: First-Person Shooter, Sports, Platformer etc.
+                Fantasy, Modern Military, Western
+            </p>
+    
+            <p>
+                c. Concept - A Concept is any sort of idea that appears in a game. There are thousands of 
+                possible concepts that can be broad or very specific. Examples include: Fish, Aliens, 
+                Indie, Female Protagonists etc.
+            </p>
+        </ul>
+    </p>
+    
+    <p>
+        5. Select a game based off of the filters selected and click ‘Run.’ If you cannot decide what game in 
+        your library you want to play, click Random and a random game will launch automatically. 
+        <img class="img-responsive" src="<%= asset_path 'findID4.jpg' %>" width = 80%/>    
+    </p>
+</p>
+</div>
+</div>
