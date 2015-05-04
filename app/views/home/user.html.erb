@@ -32,7 +32,12 @@
 						<tbody>
 							<% @gamelist.each do |game| %>
 	  							<tr>
-	  								<td><img src="<%= game.image %>" /> </td>
+	  								<td><img src="<% if game.image != nil %>
+		  									<%= game.image %>
+		  								<% else %>
+		  									<%= asset_path 'missing.jpg' %>
+		  								<% end %>" />
+		  							</td>
 	  								<td class="game-name"><%=link_to game.name, game.site_detail_url, target: "_blank" %></td>
 	  								<td class="playtime_forever"><%= UsersGame.find_by(user_id: @user.id, game_id: game.id).playtime_forever %></td>
 	  								<td>
