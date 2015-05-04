@@ -19,7 +19,9 @@ class UsersGame < ActiveRecord::Base
         count = 0
         usersgames = []
         game_ids.each do |game_id|
-            if !usersgame = UsersGame.where(user_id: user.id, game_id: game_id[0])
+            usersgame = UsersGame.where(user_id: user.id, game_id: game_id[0])
+            if !usersgame.any?
+                usersgame = UsersGame.new(user_id: user.id, game_id: game_id[0])
                 usersgame.playtime_forever = game_id[1]
                 usersgame.playtime_2weeks = game_id[2]
                 usersgames << usersgame

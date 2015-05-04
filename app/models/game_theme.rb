@@ -5,7 +5,7 @@ class GameTheme < ActiveRecord::Base
     themes = []
     game_themes.each do |game_theme|
       game_theme[1].each do |theme|
-        themes << GameTheme.new(game_id: game_theme[0].to_i, theme: theme['name'])
+        themes << GameTheme.new(game_id: game_theme[0], theme: theme['name'])
       end
     end
     GameTheme.import themes
