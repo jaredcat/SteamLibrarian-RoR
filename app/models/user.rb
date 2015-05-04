@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
     # Only update a user every 3 days or if their count isn't correct
     if ((user.game_count == nil || user.game_count != owned_games['game_count']) || (last_update == nil || last_update > Date.today+3)) && user.save
       # Associates the user with all the games they own
-      UsersGame.checkUsersGames(user)
+      UsersGame.checkUsersGames(user, owned_games)
     end
     return user
   end
