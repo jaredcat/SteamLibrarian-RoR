@@ -3,20 +3,16 @@ class UsersGame < ActiveRecord::Base
     belongs_to :user
     
     # checks if a all the user's games are associated with a user
-    def self.checkUsersGames(user)
+    def self.checkUsersGames(user, owned_games)
         count = 0
-        owned_games = Steam::Player.owned_games(user.steamid, params:{include_appinfo: 1})
-        # if users game count is unchanged, then no reason to check games
-        if(user.game_count != owned_games['game_count'])
-            # checkGame finds the game or adds it to our table.
-            game_ids = Game.checkGames(owned_games['games'])
-            # if the game isnt associated with the user then add it.
-            if(game_ids.any?)
-                count = UsersGame.add(user, game_ids)
-            end
-            user.game_count = count
-            user.save
+        # checkGame finds the game or adds it to our table.
+        game_ids = Game.checkGames(owned_games['games'])
+        # if the game isnt associated with the user then add it.
+        if(game_ids.any?)
+            count = UsersGame.add(user, game_ids)
         end
+        user.game_count = count
+        user.save
     end
 
     def self.add(user, game_ids)
