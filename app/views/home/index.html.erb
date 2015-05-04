@@ -1,2 +1,26 @@
-<%= render 'shared/error_messages' %>
-<h1>Type your Steam ID or Steam Community Name above to get started</h1>
+<div id="homepage-content">
+  <div class="logo">
+    <a href="<%= root_url %>">
+      <img type="image/svg+xml" src="<%= asset_path 'logo.svg' %>" onerror="<%= asset_path 'logo.png' %>" alt="SteamLibrarian" height="300px"/>
+    </a>
+  </div>
+  <br><br>
+  <div id="homepage-errors"><%= render 'shared/error_messages' %></div>
+  <%= form_tag(url_for(controller: "home", action: "submit"), method: "post", class: "form-inline" ) do %>
+    <div class="form-group">
+    <%= label_tag(:steamid, "steamcommunity.com/id/") %>
+    <%= text_field_tag(:steamid, '', placeholder: "Steam Username", type: "text", class: "form-control") %>
+    </div>
+    <%= submit_tag("Look Up", class: "btn btn-default") %>
+  <% end %>
+  <h3>Enter your Steam ID or Community Name above to get started!</h3>
+  <br>
+  <div class="row">
+    <div class="span12 centered-pills">
+      <ul class="nav nav-pills">
+        <li><%= link_to "Help", help_path %></li>
+        <li><%= link_to "About", about_path %></li>
+      </ul>
+    </div>
+  </div>
+</div>

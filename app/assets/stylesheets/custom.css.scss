@@ -1,21 +1,62 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-body{
-    background: #000000;
-    color: #9099a1;
+$slblue: #3a7eed;
+$slgrey: #9099a1;
+
+html, body{
+    height: 100%;
 }
 
-.content, .container-fluid, #body_content{
+body{
+    color: $slgrey;
+}
+
+#background{
+    min-height: 100%;
+    background: black; /* Old browsers */
+    background: -moz-linear-gradient(top, black 50%, #132738 92%, #428bca 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,black), color-stop(92%,#132738), color-stop(100%,#428bca)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, black 50%,#132738 92%,#428bca 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, black 50%,#132738 92%,#428bca 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, black 50%,#132738 92%,#428bca 100%); /* IE10+ */
+    background: linear-gradient(to bottom, black 50%,#132738 92%,#428bca 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#428bca',GradientType=0 ); /* IE6-9 */
+}
+
+#body-content{
+    min-height: 100%;
+    padding-bottom: 35px;
+}
+
+.content, .container-fluid, .footer-content{
     min-width: 1100px;
     max-width: 90%;
     margin: auto;
-    padding: 0 25px;
 }
 
-#footer{
-    padding-top: 50px;
+#homepage-content{
+    margin-top: -247.5px;
+    text-align: center;
+    top: 50%;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    .centered-pills { text-align: center; }
+    .centered-pills ul.nav-pills { display: inline-block; }
+    .centered-pills li { display: inline; }
+    .centered-pills a { 
+        float: left; 
+        background: white;
+        &:hover { color: white; background: #428bca;}
+        &:active { background: #2a6496; }
+    }
 }
+#homepage-errors{
+    width: 600px;
+    margin: 0 auto;
+}
+
 
 .logo{
     a{
@@ -62,4 +103,18 @@ body{
         display: inline-block;
         vertical-align: middle;
     }
+}
+
+footer{
+    position: relative;
+    margin-top: -35px;
+    height: 35px;
+    color: white;
+    a{
+        text-decoration: none;
+        color: lightgrey;
+        &:visited { color: lightgrey; }
+        &:hover{ color: $slgrey; }
+    }
+    clear: both;
 }

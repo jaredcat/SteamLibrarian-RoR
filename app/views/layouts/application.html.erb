@@ -2,11 +2,15 @@
 <html>
 <%= render 'shared/header' %>
 <body>
-  <%= render 'shared/globalheader' %>
-  <%= render 'shared/navbar' %>
-  <div id="body_content">
-    <%= yield %>
-    <%= render 'shared/footer' %>
+  <div id="background">
+    <% if !(params[:controller] == 'home' && params[:action] == 'index') %>
+      <%= render 'shared/globalheader' %>
+      <%= render 'shared/navbar' %>
+    <% end %>
+    <div id="body-content">
+      <%= yield %>
+    </div>
   </div>
+  <%= render 'shared/footer' %>
 </body>
 </html>
