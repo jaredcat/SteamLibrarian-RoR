@@ -19,7 +19,11 @@ class UsersGame < ActiveRecord::Base
         count = 0
         usersgames = []
         game_ids.each do |game_id|
-            usersgames << UsersGame.new(user_id: user.id, game_id: game_id[0], playtime_forever: game_id[1], playtime_2weeks: game_id[2])
+            if !usersgame = UsersGame.where(user_id: user.id, game_id: game_id[0])
+                usersgame.playtime_forever = game_id[1]
+                usersgame.playtime_2weeks = game_id[2]
+                usersgames << usersgame
+            end
             count += 1
         end
         UsersGame.import usersgames

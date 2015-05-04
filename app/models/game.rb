@@ -18,13 +18,14 @@ class Game < ActiveRecord::Base
     game_themes = []
     games.each do |gameObject|
       gb_id = nil
-      new = 0
+      new = false
       # Checks if the game already exists
       game = Game.find_by(appid: gameObject['appid'])
       if(game)
         gb_id = game.gb_id
+        new = false
       else
-        new = 1
+        new = true
         # Look up by name if we dont already have it in our DB
         gbLookup = GiantBomb::Game.find(gameObject['name'])[0]
         # if the look up suceeded and we dont have that gb_id in our db
