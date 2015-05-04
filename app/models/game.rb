@@ -41,7 +41,6 @@ class Game < ActiveRecord::Base
             #create new Game entry
             game = Game.new(gb_id: gbObject['id'])
             game.appid = gameObject['appid']
-            game.gb_id = gbObject['id']
             game.name = gbObject['name']
             game.api_detail_url = gbObject['api_detail_url']
             game.site_detail_url = gbObject['site_detail_url']
