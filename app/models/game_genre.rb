@@ -8,6 +8,8 @@ class GameGenre < ActiveRecord::Base
         genres << GameGenre.new(game_id: game_genre[0], genre: genre['name'])
       end
     end
-    GameGenre.import genres
+    genres.each_slice(25) do |slice|
+      GameGenre.import slice
+    end
   end
 end

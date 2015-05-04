@@ -15,7 +15,7 @@ class HomeController < ApplicationController
   end
   
   def user
-    params[:update] != true ? update = false : update = true
+    params[:update] ? update = true : update = false
     @user = User.checkUser(params[:steamid], update)
     if not @user
       error = ["Invalid user ID"]

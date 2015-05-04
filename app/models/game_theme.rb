@@ -8,6 +8,8 @@ class GameTheme < ActiveRecord::Base
         themes << GameTheme.new(game_id: game_theme[0], theme: theme['name'])
       end
     end
-    GameTheme.import themes
+    themes.each_slice(25) do |slice|
+      GameTheme.import slice
+    end
   end
 end

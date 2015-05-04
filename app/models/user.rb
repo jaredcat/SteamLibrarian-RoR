@@ -39,18 +39,21 @@ class User < ActiveRecord::Base
     elsif (user_summary['communityvisibilitystate'] < 3)
       return "private"
     end
-    user.profile_pic = user_summary['avatar']
-    user.steam_level = Steam::Player.steam_level(user.steamid)
-    user.profileurl = user_summary['profileurl']
-    user.personaname = user_summary['personaname']
     last_update = user.updated_at
-    owned_games = Steam::Player.owned_games(user.steamid, params:{include_appinfo: 1})
-    # Only update a user every 3 days or if their count isn't correct
-    if user.save
-      associated_games = UsersGame.find_by(user_id: user.id)
-      if update || associated_games == nil || (last_update == nil || last_update > Date.today+3)
-        # Associates the user with all the games they own
-        UsersGame.checkUsersGames(user, owned_games)
+    if update || last_update == nil || last_update > Date.today+3
+      update = true
+      user.profile_pic = user_summary['avatar']
+      user.steam_level = Steam::Player.steam_level(user.steamid)
+      user.profileurl = user_summary['profileurl']
+      user.personaname = user_summary['personaname']
+      owned_games = Steam::Player.owned_games(user.steamid, params:{include_appinfo: 1})
+      # Only update a user every 3 days or if their count isn't correct
+      if user.save
+        associated_games = UsersGame.find_by(user_id: user.id)
+        if update || associated_games == nil
+          # Associates the user with all the games they own
+          UsersGame.checkUsersGames(user, owned_games)
+        end
       end
     end
     return user
