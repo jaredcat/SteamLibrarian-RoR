@@ -39,7 +39,7 @@
 		  								<% end %>" />
 		  							</td>
 	  								<td class="game-name"><%=link_to game.name, game.site_detail_url, target: "_blank" %></td>
-	  								<td class="playtime_forever"><%= @UsersGames.find_by(game_id: game.id).playtime_forever %></td>
+	  								<td class="playtime_forever"><%= @usersgames.find_by(game_id: game.id).playtime_forever %></td>
 	  								<td>
 	  									<% genre_list = "" 
 	  									@genres.each do |genre| 

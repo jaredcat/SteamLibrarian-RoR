@@ -25,8 +25,8 @@ class HomeController < ApplicationController
       redirect_to action: "index", error: error
     else
       
-      @UsersGames = UsersGame.where(user_id: @user.id)
-      @gamelist = Game.where(id: @UsersGames.pluck(:game_id)).order("LOWER(name) ASC")
+      @usersgames = UsersGame.where(user_id: @user.id)
+      @gamelist = Game.where(id: @usersgames.pluck(:game_id)).order("LOWER(name) ASC")
       
       if params[:misc] != nil
         @checked_misc = params[:misc]
