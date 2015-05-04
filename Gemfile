@@ -19,6 +19,7 @@ gem 'steam-api'
 gem 'jquery-datatables-rails'
 gem 'foreman'
 gem 'resque'
+gem 'activerecord-import', '>= 0.4.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

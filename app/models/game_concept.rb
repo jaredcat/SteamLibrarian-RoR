@@ -1,9 +1,13 @@
 class GameConcept < ActiveRecord::Base
   belongs_to :games
   
-  def self.add(game_id, concepts)
-    concepts.each do |concept|
-      GameConcept.where(game_id: game_id, concept: concept['name']).first_or_create
+  def self.add(game_concepts)
+    concepts = []
+    game_concepts.each do |game_concept|
+      game_concept[1].each do |concept|
+        concepts << GameConcept.new(game_id: game_concept[0].to_i, concept: concept['name'])
+      end
     end
+    GameConcept.import concepts
   end
 end

@@ -53,6 +53,7 @@ body{
         &:active { background: #2a6496; }
     }
 }
+
 #homepage-errors{
     width: 600px;
     margin: 0 auto;
@@ -75,8 +76,6 @@ body{
     background: -ms-linear-gradient(top, #171a21 50%,#132738 92%,#428bca 100%); /* IE10+ */
     background: linear-gradient(to bottom, #171a21 50%,#132738 92%,#428bca 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#171a21', endColorstr='#428bca',GradientType=0 ); /* IE6-9 */
-
-
 
     height: 140px;
     position: relative;
