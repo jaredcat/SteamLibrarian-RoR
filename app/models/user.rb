@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   end
   
   # Checks if a user is new or already exists
-  def self.checkUser(steamid)
+  def self.checkUser(steamid, update)
     user = User.find_by(steamid: steamid)
     if (user == nil)
       user = User.new
@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
     # Only update a user every 3 days or if their count isn't correct
     if user.save
       associated_games = UsersGame.find_by(user_id: user.id)
-      if associated_games == nil || (last_update == nil || last_update > Date.today+3)
+      if update || associated_games == nil || (last_update == nil || last_update > Date.today+3)
         # Associates the user with all the games they own
         UsersGame.checkUsersGames(user, owned_games)
       end

@@ -15,7 +15,8 @@ class HomeController < ApplicationController
   end
   
   def user
-    @user = User.checkUser(params[:steamid])
+    params[:update] != true ? update = false : update = true
+    @user = User.checkUser(params[:steamid], update)
     if not @user
       error = ["Invalid user ID"]
       redirect_to action: "index", error: error
@@ -63,6 +64,7 @@ class HomeController < ApplicationController
       @concepts = GameConcept.where(game_id: @gamelist).order("LOWER(concept) ASC")#.count("concept")
     end
   end
+  
   
   def stats
     @user = User.checkUser(params[:steamid])
