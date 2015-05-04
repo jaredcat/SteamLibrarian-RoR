@@ -12,4 +12,12 @@ class GameConcept < ActiveRecord::Base
       GameConcept.import slice
     end
   end
+  
+  def self.update(game_concepts)
+    game_concepts.each do |game_concept|
+      game_concept[1].each do |concept|
+        GameConcept.where(game_id: game_concept[0], concept: concept['name']).first_or_create
+      end
+    end
+  end
 end
