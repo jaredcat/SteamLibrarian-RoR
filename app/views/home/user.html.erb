@@ -14,7 +14,9 @@
 				<% if @gamelist.length < 1 %>
 					<h2>No games returned. Select less filters</h2>
 				<% else %>
-					<div class="btn-row" style="padding-bottom: 10px; margin-top: -5px;"><button type="button" class="random-button btn btn-default pull-right">Random</button></div>
+					<div class="btn-row" style="padding-bottom: 10px; margin-top: -5px;">
+						<%= link_to "Run Random Game", "steam://run/#{@gamelist.sample['appid']}", htmloptions={class: "random-button btn btn-default pull-right", role: "button"}   %>
+					</div>
 					<table id="gametable" class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
 							<tr>
@@ -60,13 +62,13 @@
 	  									end %>
 	  									<%= concept_list[0..-3] %>
 	  								</td>
-	  								<td><a href="steam://run/<%= game.appid %>" style="color:white"><button type="button" role="button" class="btn btn-primary btn-lg btn-block">Run</button></a></td>
+	  								<td><%= link_to "Run", "steam://run/#{game.appid}", htmloptions={class: "btn btn-primary btn-lg btn-block", role: "button", type: "button", style: "color:white" }  %></td>
 	  							</tr>
 							<% end %>
 						</tbody>
 					</table>
 					<div class="btn-row" style="padding-top: 10px; margin-bottom: -5px;">
-						<button type="button" class="random-button btn btn-default pull-right">Random</button>
+						<%= link_to "Run Random Game", "steam://run/#{@gamelist.sample['appid']}", htmloptions ={class: "random-button btn btn-default pull-right", role: "button"} %>
 					</div>
 				<% end %>
 			</div>

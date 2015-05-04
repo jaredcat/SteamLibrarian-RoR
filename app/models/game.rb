@@ -94,5 +94,43 @@ class Game < ActiveRecord::Base
     # if the row didnt exist and a new one wasnt created, game should equal nil
     return game
   end
+  
+  def self.checkGames(games)
+    games.each do |gameObject|
+      if (game = Game.find_by(appid: gameObject['appid']))
+        # Check if the game should be updated
+        if game.updated_at < Date.today+30
+          break
+        end
+      else
+        gbLookup = GiantBomb::Game.find(name)[0]
+        if (gbLookup != nil && !Game.exists?(gb_id: gbLookup.id))
+          return Game.newGame(game, appID)
+        end
+      end
+      
+      
+      
+      # Get info directly from the game
+      gbObject = HTTParty.get("http://www.giantbomb.com/api/game/3030-" + game.gb_id.to_s + "/?api_key=" + ENV['GIANTBOMB_API_KEY'] + "&format=json")['results']
+      return nil if gbObject == nil
+      
+      #create new Game entry
+      game = Game.where(gb_id: gbObject['id']).first_or_create
+      game.appid = gameObject['appid']
+      game.gb_id = gbObject['id']
+      game.name = gbObject['name']
+      game.api_detail_url = gbObject['api_detail_url']
+      game.site_detail_url = gbObject['site_detail_url']
+      game.deck = gbObject['deck']
+      game.image = gbObject['image']['icon_url'] if gbObject['image'] != nil
+      game.date_last_updated = gbObject['date_last_updated']
+      if game.save
+        GameConcept.add(game.id, gbObject['concepts']) if gbObject['concepts'] != nil
+        GameTheme.add(game.id, gbObject['themes'])if gbObject['themes'] != nil
+        GameGenre.add(game.id, gbObject['genres'])if gbObject['genres'] != nil
+      end
+    end
+  end
 end
  

@@ -44,11 +44,10 @@ class User < ActiveRecord::Base
     user.profileurl = user_summary['profileurl']
     user.personaname = user_summary['personaname']
     last_update = user.updated_at
-    owned_games = Steam::Player.owned_games(user.steamid, params:{include_appinfo: 1})
     # Only update a user every 3 days
-    if ((user.game_count != owned_games['game_count']) || (last_update == nil || last_update > Date.today+3)) && user.save
+    if (last_update == nil || last_update > Date.today+3) && user.save
       # Associates the user with all the games they own
-      UsersGame.checkUsersGames(user.id, owned_games)
+      UsersGame.checkUsersGames(user)
     end
     return user
   end
