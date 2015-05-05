@@ -39,32 +39,36 @@ class Game < ActiveRecord::Base
       
       if(gb_id)
         # Get info directly from the game
-        gbObject = HTTParty.get("http://www.giantbomb.com/api/game/3030-" + gb_id.to_s + "/?api_key=" + ENV['GIANTBOMB_API_KEY'] + "&format=json")['results']
-        if gbObject != nil
-          if(new)
-            #create new Game entry
-            game = Game.new(gb_id: gbObject['id'])
-            game.appid = gameObject['appid']
-          end
-          game.name = gbObject['name']
-          game.api_detail_url = gbObject['api_detail_url']
-          game.site_detail_url = gbObject['site_detail_url']
-          game.deck = gbObject['deck']
-          game.image = gbObject['image']['icon_url'] if gbObject['image'] != nil
-          game.date_last_updated = gbObject['date_last_updated']
-          if game.save
+        apicall = HTTParty.get("http://www.giantbomb.com/api/game/3030-" + gb_id.to_s + "/?api_key=" + ENV['GIANTBOMB_API_KEY'] + "&format=json")
+        if(apicall['status_code'] == 1)
+          gbObject = apicall['results']
+          if gbObject != nil && gbObject != []
             if(new)
-              game_genres << [game.id, gbObject['genres']] if gbObject['genres'] != nil
-              game_themes << [game.id, gbObject['themes']] if gbObject['themes'] != nil
-              game_concepts << [game.id, gbObject['concepts']] if gbObject['concepts'] != nil
-            elsif(force_update)
-              update_game_genres << [game.id, gbObject['genres']] if gbObject['genres'] != nil
-              update_game_themes << [game.id, gbObject['themes']] if gbObject['themes'] != nil
-              update_game_concepts << [game.id, gbObject['concepts']] if gbObject['concepts'] != nil
+              #create new Game entry
+              game = Game.new
+              game.gb_id = gbObject['id']
+              game.appid = gameObject['appid']
+            end
+            game.name = gbObject['name']
+            game.api_detail_url = gbObject['api_detail_url']
+            game.site_detail_url = gbObject['site_detail_url']
+            game.deck = gbObject['deck']
+            game.image = gbObject['image']['icon_url'] if gbObject['image'] != nil
+            game.date_last_updated = gbObject['date_last_updated']
+            if game.save
+              if(new)
+                game_genres << [game.id, gbObject['genres']] if gbObject['genres'] != nil
+                game_themes << [game.id, gbObject['themes']] if gbObject['themes'] != nil
+                game_concepts << [game.id, gbObject['concepts']] if gbObject['concepts'] != nil
+              elsif(force_update)
+                update_game_genres << [game.id, gbObject['genres']] if gbObject['genres'] != nil
+                update_game_themes << [game.id, gbObject['themes']] if gbObject['themes'] != nil
+                update_game_concepts << [game.id, gbObject['concepts']] if gbObject['concepts'] != nil
+              end
             end
           end
+          game_ids << [game.id, gameObject['playtime_forever'], gameObject['playtime_2weeks']]
         end
-        game_ids << [game.id, gameObject['playtime_forever'], gameObject['playtime_2weeks']]
       end
     end
     GameGenre.add(game_genres) if game_genres != []

@@ -13,7 +13,7 @@ class HomeController < ApplicationController
       if(steamid)
         redirect_to action: "user", steamid: steamid
       else
-        error = ["Invalid user ID"]
+        error = ["Invalid user ID. Check out help page!"]
         redirect_to action: "index", error: error
       end
     end
@@ -23,7 +23,7 @@ class HomeController < ApplicationController
     params[:update] ? update = true : update = false
     @user = User.checkUser(params[:steamid], update)
     if not @user
-      error = ["Invalid user ID"]
+      error = ["Invalid user ID. Check out help page!"]
       redirect_to action: "index", error: error
     elsif @user == "private"
       @user = nil
