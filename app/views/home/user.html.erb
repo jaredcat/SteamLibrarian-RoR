@@ -39,41 +39,35 @@
 		  								<% end %>" />
 		  							</td>
 	  								<td class="game-name"><%=link_to game.name, game.site_detail_url, target: "_blank" %></td>
-	  								<td class="playtime_forever"><%= @usersgames.find_by(game_id: game.id).playtime_forever %></td>
+	  								<td class="playtime_forever"><%= game.users_games[0].playtime_forever %></td>
 	  								<td>
 	  									<% genre_list = "" 
-	  									@genres.each do |genre| 
-	  										if genre.game_id == game.id
-	  											genre_list += "#{genre.genre}, " 
-	  										end
+	  									game.game_genres.each do |genre|
+	  										genre_list += "#{genre.genre}, "
 	  									end %>
 	  									<%= genre_list[0..-3] %>
 	  								</td>
 	  								<td>
 	  									<% theme_list = ""
-	  									@themes.each do |theme|
-	  										if theme.game_id == game.id
-	  											theme_list += "#{theme.theme}, "
-	  										 end
+	  									game.game_themes do |theme|
+	  										theme_list += "#{theme.theme}, "
 	  									end %>
 	  									<%= theme_list[0..-3] %>
 	  								</td>
 	  								<td>
 	  									<% concept_list = ""
-	  									@concepts.each do |concept| 
-	  										if concept.game_id == game.id
-	  											concept_list += "#{concept.concept}, " 
-	  										end
+	  									game.game_concepts.each do |concept| 
+	  										concept_list += "#{concept.concept}, "
 	  									end %>
 	  									<%= concept_list[0..-3] %>
 	  								</td>
-	  								<td><%= link_to "Run", "steam://run/#{game.appid}", htmloptions={class: "btn btn-primary btn-lg btn-block", role: "button", type: "button", style: "color:white" }  %></td>
+	  								<td><%= link_to "Run", "steam://run/#{game.appid}", htmloptions = {class: "btn btn-primary btn-lg btn-block", role: "button", type: "button", style: "color:white" }  %></td>
 	  							</tr>
 							<% end %>
 						</tbody>
 					</table>
 					<div class="btn-row" style="padding-top: 10px; margin-bottom: -5px;">
-						<%= link_to "Run Random Game", "steam://run/#{@gamelist.sample['appid']}", htmloptions ={class: "random-button btn btn-default pull-right", role: "button"} %>
+						<%= link_to "Run Random Game", "steam://run/#{@gamelist.sample['appid']}", htmloptions = {class: "random-button btn btn-default pull-right", role: "button"} %>
 					</div>
 				<% end %>
 			</div>

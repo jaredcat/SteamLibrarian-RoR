@@ -31,19 +31,20 @@ class HomeController < ApplicationController
       redirect_to action: "index", error: error
     else
       
-      @usersgames = UsersGame.where(user_id: @user.id)
-      @gamelist = Game.where(id: @usersgames.pluck(:game_id)).order("LOWER(name) ASC")
+      #@usersgames = UsersGame.where(user_id: @user.id)
+      #@gamelist = Game.where(id: @usersgames.pluck(:game_id)).order("LOWER(name) ASC")
+      @gamelist = Game.includes(:users_games, :game_themes, :game_genres, :game_concepts).where(users_games: {user_id: @user.id}).order("LOWER(name) ASC")
       
       if params[:misc] != nil
         @checked_misc = params[:misc]
         params[:misc].each do |misc|
           if misc == "Never Played"
-            @neverplayed = Game.where(id: UsersGame.where(game_id: @gamelist).where("playtime_forever < ?", 1).pluck(:game_id))
+            @neverplayed = Game.where(id: UsersGame.where(game_id: @gamelist).where("playtime_forever = ?", 0).pluck(:game_id))
             @gamelist &= @neverplayed
           end
           if misc == "Only Played"
-            @onlyplayed = Game.where(id: UsersGame.where(game_id: @gamelist).where("playtime_forever > ?", 0).pluck(:game_id))
-            @gamelist &= @onlyplayed
+            @onlyplayed = Game.where(id: UsersGame.where(game_id: @gamelist).where("playtime_forever != ?", 0).pluck(:game_id))
+           @gamelist &= @onlyplayed
           end
         end
       end
@@ -64,9 +65,23 @@ class HomeController < ApplicationController
       @onlyplayed = Game.where(id: UsersGame.where(game_id: @gamelist).where("playtime_forever > ?", 0).pluck(:game_id)) if @onlyplayed == nil
       
       @misc = [["Never Played", @neverplayed.length], ["Only Played", @onlyplayed.length]]
-      @genres = GameGenre.where(game_id: @gamelist).order("LOWER(genre) ASC")#.count("genre")
-      @themes = GameTheme.where(game_id: @gamelist).order("LOWER(theme) ASC")#.count("theme")
-      @concepts = GameConcept.where(game_id: @gamelist).order("LOWER(concept) ASC")#.count("concept")
+      @genres = {}
+      @themes = {}
+      @concepts = {}
+      @gamelist.each do |game|
+        game.game_genres.each do |genre|
+          @genres[genre.genre] != nil ? @genres[genre.genre] += 1 : @genres[genre.genre] = 1
+        end
+        game.game_themes.each do |theme|
+          @themes[theme.theme] != nil ? @themes[theme.theme] += 1 : @themes[theme.theme] = 1
+        end
+        game.game_concepts.each do |concept|
+          @concepts[concept.concept] != nil ? @concepts[concept.concept] += 1 : @concepts[concept.concept] = 1
+        end
+      end
+      @genres = @genres.sort_by {|genre, count| genre}
+      @themes = @themes.sort_by {|theme, count| theme}
+      @concepts = @concepts.sort_by {|concept, count| concept}
     end
   end
   

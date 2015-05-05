@@ -14,10 +14,10 @@
 			</div>
 		<% end %>
 	<hr />
-	<% if @genres != nil %>
+	<% if @genres != {} %>
     <h4 class="text-left filter-header">Genres</h4>
     <%= submit_tag("Filter", class: "filter-btn btn btn-default") %>
-	  <% @genres.group("genre").count("genre").each do |genre| %>
+	  <% @genres.each do |genre| %>
 			<div class="checkbox">
 				<% @checked_genres != nil && @checked_genres.include?(genre[0]) ? checked = true : checked = false	%>
 			  	<label><%= check_box_tag("genres[]", genre[0], checked) %><%= genre[0] %> <span class="filter-amount">(<%= genre[1] %>)</span></label>
@@ -25,10 +25,10 @@
 		<% end %>
 		<hr />
   <% end %>
-  <% if @themes != nil %>
+  <% if @themes != {} %>
   	<h4 class="text-left filter-header">Themes</h4>
   	<%= submit_tag("Filter", class: "filter-btn btn btn-default") %>
-		<% @themes.group("theme").count("theme").each do |theme| %>
+		<% @themes.each do |theme| %>
 			<div class="checkbox">
 				<% @checked_themes != nil && @checked_themes.include?(theme[0]) ? checked = true : checked = false	%>
 		  		<label><%= check_box_tag("themes[]", theme[0], checked) %><%= theme[0] %> <span class="filter-amount">(<%= theme[1] %>)</span></label>
@@ -36,10 +36,10 @@
 		<% end %>
 		<hr />
 	<% end %>
-	<% if @concepts != nil %>
+	<% if @concepts != {} %>
 	  <h4 class="text-left filter-header">Concepts</h4>
 	  <%= submit_tag("Filter", class: "filter-btn btn btn-default") %>
-		<% @concepts.group("concept").count("concept").each do |concept|
+		<% @concepts.each do |concept|
 			if concept[1] > 4 %>
 				<div class="checkbox">
 					<% @checked_concepts != nil && @checked_concepts.include?(concept[0]) ? checked = true : checked = false	%>
