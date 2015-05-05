@@ -33,7 +33,7 @@ class HomeController < ApplicationController
       
       #@usersgames = UsersGame.where(user_id: @user.id)
       #@gamelist = Game.where(id: @usersgames.pluck(:game_id)).order("LOWER(name) ASC")
-      @gamelist = Game.includes(:users_games, :game_themes, :game_genres, :game_concepts).where(users_games: {user_id: @user.id}).order("LOWER(name) ASC")
+      @gamelist = Game.includes(:users_games).where(users_games: {user_id: @user.id}).order("LOWER(name) ASC")
       
       if params[:misc] != nil
         @checked_misc = params[:misc]

@@ -40,12 +40,12 @@
 	  <h4 class="text-left filter-header">Concepts</h4>
 	  <%= submit_tag("Filter", class: "filter-btn btn btn-default") %>
 		<% @concepts.each do |concept|
-			if concept[1] > 4 %>
+			#if concept[1] > 4 %>
 				<div class="checkbox">
 					<% @checked_concepts != nil && @checked_concepts.include?(concept[0]) ? checked = true : checked = false	%>
 				  	<label><%= check_box_tag("concepts[]", concept[0], checked) %><%= concept[0] %> <span class="filter-amount">(<%= concept[1] %>)</span></label>
 				</div>
-			<% end %>
+			<%# end %>
 		<% end %>
 	<% end %>
 <% end %>
