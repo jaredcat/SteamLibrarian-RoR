@@ -1,8 +1,18 @@
 <% if @errors != nil && @errors.any? %>
   <div id="error_explanation">
     <div class="alert alert-danger">
-      <% @errors.each do |msg| %>
-        <%= msg %><br>
+      <% @errors.each do |msg| 
+        if msg = "invalidid" %>
+          <%= "Invalid id." %>
+          <%= link_to "Need help?", help_path %>
+        <% elsif msg = "private" %>
+          <%= "Profile set to Private." %>
+        <% elsif msg = "nousername" %>
+          <%= "Must enter a Username." %>
+        <% else %>
+          <%= "Something went wrong." %>
+        <% end %>
+        <br>
       <% end %>
     </div>
   </div>

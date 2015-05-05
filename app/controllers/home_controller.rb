@@ -6,14 +6,14 @@ class HomeController < ApplicationController
   
   def submit
     if params[:steamid] == ""
-      error = ["Must enter a Username"]
+      error = ["nousername"]
       redirect_to action: "index", error: error
     else
       steamid = User.checkVanity(params[:steamid])
       if(steamid)
         redirect_to action: "user", steamid: steamid
       else
-        error = ["Invalid user ID. Check out help page!"]
+        error = ["invalidid"]
         redirect_to action: "index", error: error
       end
     end
@@ -23,11 +23,11 @@ class HomeController < ApplicationController
     params[:update] ? update = true : update = false
     @user = User.checkUser(params[:steamid], update)
     if not @user
-      error = ["Invalid user ID. Check out help page!"]
+      error = ["invalidid"]
       redirect_to action: "index", error: error
     elsif @user == "private"
       @user = nil
-      error = ["Profile set to Private"]
+      error = ["private"]
       redirect_to action: "index", error: error
     else
       
