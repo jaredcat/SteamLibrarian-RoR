@@ -49,7 +49,7 @@
 	  								</td>
 	  								<td>
 	  									<% theme_list = ""
-	  									game.game_themes do |theme|
+	  									game.game_themes.each do |theme|
 	  										theme_list += "#{theme.theme}, "
 	  									end %>
 	  									<%= theme_list[0..-3] %>
