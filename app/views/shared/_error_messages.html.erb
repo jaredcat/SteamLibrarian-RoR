@@ -5,9 +5,9 @@
         if msg = "invalidid" %>
           <%= "Invalid id." %>
           <%= link_to "Need help?", help_path %>
-        <% elsif msg = "private" %>
+        <% elsif msg == "private" %>
           <%= "Profile set to Private." %>
-        <% elsif msg = "nousername" %>
+        <% elsif msg == "nousername" %>
           <%= "Must enter a Username." %>
         <% else %>
           <%= "Something went wrong." %>
